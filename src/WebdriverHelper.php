@@ -12,6 +12,7 @@ class WebdriverHelper extends Module implements DependsOnModule
      */
     protected $webDriver;
 
+    // phpcs:disable
     /**
      * @return array
      */
@@ -29,6 +30,7 @@ class WebdriverHelper extends Module implements DependsOnModule
     {
         $this->webDriver = $webDriver;
     }
+    // phpcs:enable
 
     /**
      * @Given I am on page :page
