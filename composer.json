@@ -10,5 +10,12 @@
         }
     ],
     "minimum-stability": "stable",
-    "require": {}
+    "autoload": {
+        "psr-4": {
+            "Jeckel\\GherkinHelper\\": "src/"
+        }
+    },
+    "require": {
+        "codeception/codeception": "^2.5"
+    }
 }
