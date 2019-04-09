@@ -1,0 +1,125 @@
+# .circleci/config.yml
+version: 2.1
+
+# Require orbs
+orbs:
+    codecov: codecov/codecov@1.0.4
+
+# Configure Jobs:
+jobs:
+    composer:
+        docker:
+            - image: jeckel/php-test:7.3-cli-alpine
+        working_directory: /home/circleci/project
+        steps:
+            - checkout
+
+            - restore_cache:
+                  name: Restore composer's vendor cache
+                  keys:
+                      - vendor-v1-{{ checksum "composer.lock" }}
+            - run:
+                  name: Install composer deps
+                  command: composer install --no-suggest --no-interaction
+            - save_cache:
+                  name: Save composer's vendor in cache
+                  key: vendor-v1-{{ checksum "composer.lock" }}
+                  paths:
+                      - "vendor"
+            - persist_to_workspace:
+                  root: /home/circleci
+                  paths: project
+
+#    tests:
+#        machine:
+#            docker_layer_caching: true
+#        working_directory: /home/circleci/project
+#        steps:
+#            - attach_workspace:
+#                  at: /home/circleci
+#            - run:
+#                  name: Install Docker Compose
+#                  command: |
+#                      curl -L https://github.com/docker/compose/releases/download/1.23.2/docker-compose-`uname -s`-`uname -m` > ~/docker-compose
+#                      chmod +x ~/docker-compose
+#                      sudo mv ~/docker-compose /usr/local/bin/docker-compose
+#            - run:
+#                  name: Pull images
+#                  command: |
+#                      docker-compose pull
+#            - run:
+#                  name: Launch services
+#                  command: docker-compose up -d web fpm selenium
+#            - run:
+#                  name: Run codeception
+#                  command: docker-compose run --rm codeception wait-for-it.sh selenium:4444 -- ./vendor/bin/codecept run --coverage --coverage-html --coverage-xml
+#
+#            - codecov/upload:
+#                  file: tests/_output/coverage.xml
+#
+#            - store_artifacts:
+#                  path: tests/_output
+
+    phpstan:
+        docker:
+            - image: jeckel/php-test:7.3-cli-alpine
+        working_directory: /home/circleci/project
+        steps:
+            - attach_workspace:
+                  at: /home/circleci
+            - run:
+                  name: PHP Stan
+                  command: vendor/bin/phpstan analyse
+
+    phpcs:
+        docker:
+            - image: jeckel/php-test:7.3-cli-alpine
+        working_directory: /home/circleci/project
+        steps:
+            - attach_workspace:
+                  at: /home/circleci
+            - run:
+                  name: PHP Code Sniffer
+                  command: vendor/bin/phpcs
+
+    phpmd:
+        docker:
+            - image: jeckel/php-test:7.3-cli-alpine
+        working_directory: /home/circleci/project
+        steps:
+            - attach_workspace:
+                  at: /home/circleci
+            - run:
+                  name: PHP Mess Detector
+                  command: vendor/bin/phpmd src text cleancode,codesize,design,naming,unusedcode
+
+    builds_completed:
+        docker:
+            - image: docker:git
+        steps:
+            - run: echo "Builds completed with success"
+
+# Define the workflow:
+workflows:
+    version: 2
+    build:
+        jobs:
+            - composer
+            - tests:
+                requires:
+                    - composer
+            - phpstan:
+                requires:
+                    - composer
+            - phpcs:
+                requires:
+                    - composer
+            - phpmd:
+                requires:
+                    - composer
+            - builds_completed:
+                requires:
+                    - phpstan
+#                    - tests
+                    - phpcs
+                    - phpmd
