@@ -5,6 +5,13 @@ version: 2.1
 orbs:
     codecov: codecov/codecov@1.0.4
 
+# Define reusable executors
+executors:
+  php73cli: # declares a reusable executor
+    docker:
+      - image: jeckel/php-test:7.3-cli-alpine
+    working_directory: /home/circleci/project
+
 # Configure Jobs:
 jobs:
     composer:
@@ -29,6 +36,21 @@ jobs:
             - persist_to_workspace:
                   root: /home/circleci
                   paths: project
+
+    tests:
+        executor: php73cli
+        steps:
+            - attach_workspace:
+                at: /home/circleci
+            - run:
+                name: Codeception
+                command: vendor/bin/codecept run --coverage --coverage-html --coverage-xml
+
+            - codecov/upload:
+                file: tests/_output/coverage.xml
+
+            - store_artifacts:
+                path: tests/_output
 
     phpstan:
         docker:
@@ -71,21 +93,25 @@ jobs:
 
 # Define the workflow:
 workflows:
-    version: 2
-    build:
-        jobs:
+  version: 2
+  build:
+    jobs:
+      - composer
+      - tests:
+          requires:
             - composer
-            - phpstan:
-                requires:
-                    - composer
-            - phpcs:
-                requires:
-                    - composer
-            - phpmd:
-                requires:
-                    - composer
-            - builds_completed:
-                requires:
-                    - phpstan
-                    - phpcs
-                    - phpmd
+      - phpstan:
+          requires:
+            - composer
+      - phpcs:
+          requires:
+            - composer
+      - phpmd:
+          requires:
+            - composer
+      - builds_completed:
+          requires:
+            - phpstan
+            - tests
+            - phpcs
+            - phpmd
