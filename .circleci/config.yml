@@ -20,7 +20,7 @@ jobs:
                       - vendor-v1-{{ checksum "composer.lock" }}
             - run:
                   name: Install composer deps
-                  command: composer install --no-suggest --no-interaction
+                  command: composer install --no-suggest --no-interaction --ignore-platform-reqs
             - save_cache:
                   name: Save composer's vendor in cache
                   key: vendor-v1-{{ checksum "composer.lock" }}
