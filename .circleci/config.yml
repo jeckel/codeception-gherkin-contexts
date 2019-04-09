@@ -7,17 +7,20 @@ orbs:
 
 # Define reusable executors
 executors:
-  php73cli: # declares a reusable executor
+  php73cli-alpine: # declares a reusable executor
     docker:
       - image: jeckel/php-test:7.3-cli-alpine
+    working_directory: /home/circleci/project
+
+  php73cli-stretch: # declares a reusable executor
+    docker:
+      - image: jeckel/php-test:7.3-cli-stretch
     working_directory: /home/circleci/project
 
 # Configure Jobs:
 jobs:
     composer:
-        docker:
-            - image: jeckel/php-test:7.3-cli-alpine
-        working_directory: /home/circleci/project
+        executor: php73cli-alpine
         steps:
             - checkout
 
@@ -38,7 +41,7 @@ jobs:
                   paths: project
 
     tests:
-        executor: php73cli
+        executor: php73cli-stretch
         steps:
             - attach_workspace:
                 at: /home/circleci
