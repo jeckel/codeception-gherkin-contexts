@@ -1,5 +1,5 @@
 parameters:
     paths:
         - src
-#        - tests/unit
+        - tests/unit
     level: max

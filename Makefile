@@ -14,4 +14,4 @@ phpmd:
 	@${PHP} ./vendor/bin/phpmd src text cleancode,codesize,design,naming,unusedcode
 
 codecept:
-	@${PHP} ./vendor/bin/codecept run
+	@${PHP} ./vendor/bin/codecept run --coverage --coverage-html
