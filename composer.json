@@ -1,0 +1,14 @@
+{
+    "name": "jeckel/codeception-gherkin-helpers",
+    "description": "A collection of Codeception Helpers for Gherkin BDD tests",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Julien MERCIER-ROJAS",
+            "email": "julien@jeckel-lab.fr"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {}
+}
