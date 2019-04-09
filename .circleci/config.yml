@@ -30,36 +30,6 @@ jobs:
                   root: /home/circleci
                   paths: project
 
-#    tests:
-#        machine:
-#            docker_layer_caching: true
-#        working_directory: /home/circleci/project
-#        steps:
-#            - attach_workspace:
-#                  at: /home/circleci
-#            - run:
-#                  name: Install Docker Compose
-#                  command: |
-#                      curl -L https://github.com/docker/compose/releases/download/1.23.2/docker-compose-`uname -s`-`uname -m` > ~/docker-compose
-#                      chmod +x ~/docker-compose
-#                      sudo mv ~/docker-compose /usr/local/bin/docker-compose
-#            - run:
-#                  name: Pull images
-#                  command: |
-#                      docker-compose pull
-#            - run:
-#                  name: Launch services
-#                  command: docker-compose up -d web fpm selenium
-#            - run:
-#                  name: Run codeception
-#                  command: docker-compose run --rm codeception wait-for-it.sh selenium:4444 -- ./vendor/bin/codecept run --coverage --coverage-html --coverage-xml
-#
-#            - codecov/upload:
-#                  file: tests/_output/coverage.xml
-#
-#            - store_artifacts:
-#                  path: tests/_output
-
     phpstan:
         docker:
             - image: jeckel/php-test:7.3-cli-alpine
@@ -105,9 +75,6 @@ workflows:
     build:
         jobs:
             - composer
-            - tests:
-                requires:
-                    - composer
             - phpstan:
                 requires:
                     - composer
@@ -120,6 +87,5 @@ workflows:
             - builds_completed:
                 requires:
                     - phpstan
-#                    - tests
                     - phpcs
                     - phpmd
