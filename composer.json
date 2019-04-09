@@ -17,7 +17,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Test\\Jeckel\\GherkinHelper\\": "src/"
+            "Test\\Jeckel\\GherkinHelper\\": "tests/unit/"
         }
     },
     "require": {
