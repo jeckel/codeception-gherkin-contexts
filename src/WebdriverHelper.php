@@ -1,6 +1,7 @@
 <?php
 namespace Jeckel\GherkinHelper;
 
+use Behat\Behat\Context\Context;
 use Codeception\Lib\Interfaces\DependsOnModule;
 use Codeception\Module\WebDriver;
 use Codeception\Module;
@@ -10,7 +11,7 @@ use Codeception\Module;
  * @package Jeckel\GherkinHelper
  * @SuppressWarnings(PHPMD.TooManyPublicMethods)
  */
-class WebdriverHelper extends Module implements DependsOnModule
+class WebdriverHelper extends Module implements DependsOnModule, Context
 {
     /**
      * @var WebDriver

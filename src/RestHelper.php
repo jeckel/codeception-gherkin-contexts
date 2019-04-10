@@ -1,11 +1,12 @@
 <?php
 namespace Jeckel\GherkinHelper;
 
+use Behat\Behat\Context\Context;
 use Codeception\Lib\Interfaces\DependsOnModule;
 use Codeception\Module;
 use Codeception\Module\REST;
 
-class RestHelper extends Module implements DependsOnModule
+class RestHelper extends Module implements DependsOnModule, Context
 {
     /** @var REST */
     protected $rest;
