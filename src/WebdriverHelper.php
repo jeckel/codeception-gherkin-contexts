@@ -143,10 +143,28 @@ class WebdriverHelper extends Module implements DependsOnModule, Context
     }
 
     /**
+     * @Then I see in source
+     * @param string $raw
+     */
+    public function iSeeInSource(string $raw)
+    {
+        $this->webDriver->seeInSource($raw);
+    }
+
+    /**
      * @Then I should not see in source
      * @param string $raw
      */
     public function iShouldNotSeeInSource(string $raw)
+    {
+        $this->webDriver->dontSeeInSource($raw);
+    }
+
+    /**
+     * @Then I don't see in source
+     * @param string $raw
+     */
+    public function iDontSeeInSource(string $raw)
     {
         $this->webDriver->dontSeeInSource($raw);
     }
