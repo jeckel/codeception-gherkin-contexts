@@ -92,11 +92,76 @@ class WebdriverHelper extends Module implements DependsOnModule
     }
 
     /**
-     * @Then I should see :text
+     * @Then /I (should see|see) :text/
      * @param string $text
      */
     public function iShouldSee(string $text)
     {
         $this->webDriver->see($text);
+    }
+
+    /**
+     * @Then /I (should not|don't) see :text/
+     * @param string $text
+     */
+    public function iShouldNotSee(string $text)
+    {
+        $this->webDriver->dontSee($text);
+    }
+
+    /**
+     * @Then /I (should see|see) in source/
+     * @param string $raw
+     */
+    public function iSeeInSource(string $raw)
+    {
+        $this->webDriver->seeInSource($raw);
+    }
+
+    /**
+     * @Then /I (should not|don't) see in source/
+     * @param string $raw
+     */
+    public function iDontSeeInSource(string $raw)
+    {
+        $this->webDriver->dontSeeInSource($raw);
+    }
+
+    /**
+     * @Then I see link :link
+     * @param string $link
+     */
+    public function iSeeLink(string $link)
+    {
+        $this->webDriver->seeLink($link);
+    }
+
+    /**
+     * @Then I see link :link with url :url
+     * @param string $link
+     * @param string $url
+     */
+    public function iSeeLinkWithUrl(string $link, string $url)
+    {
+        $this->webDriver->seeLink($link, $url);
+    }
+
+    /**
+     * @Then I don't see link :link
+     * @param string $link
+     */
+    public function iDontSeeLink(string $link)
+    {
+        $this->webDriver->dontSeeLink($link);
+    }
+
+    /**
+     * @Then I don't see link :link with url :url
+     * @param string $link
+     * @param string $url
+     */
+    public function iDontSeeLinkWithUrl(string $link, string $url)
+    {
+        $this->webDriver->dontSeeLink($link, $url);
     }
 }
