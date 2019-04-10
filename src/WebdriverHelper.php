@@ -5,6 +5,11 @@ use Codeception\Lib\Interfaces\DependsOnModule;
 use Codeception\Module\WebDriver;
 use Codeception\Module;
 
+/**
+ * Class WebdriverHelper
+ * @package Jeckel\GherkinHelper
+ * @SuppressWarnings(PHPMD.TooManyPublicMethods)
+ */
 class WebdriverHelper extends Module implements DependsOnModule
 {
     /**
