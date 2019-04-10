@@ -99,7 +99,6 @@ class WebdriverHelper extends Module implements DependsOnModule, Context
 
     /**
      * @Then I should see :text
-     * @Then I see :text
      * @param string $text
      */
     public function iShouldSee(string $text)
@@ -108,8 +107,16 @@ class WebdriverHelper extends Module implements DependsOnModule, Context
     }
 
     /**
+     * @Then I see :text
+     * @param string $text
+     */
+    public function iSee(string $text)
+    {
+        $this->webDriver->see($text);
+    }
+
+    /**
      * @Then I should not see :text
-     * @Then I don't see :text
      * @param string $text
      */
     public function iShouldNotSee(string $text)
@@ -118,21 +125,28 @@ class WebdriverHelper extends Module implements DependsOnModule, Context
     }
 
     /**
+     * @Then I don't see :text
+     * @param string $text
+     */
+    public function iDontSee(string $text)
+    {
+        $this->webDriver->dontSee($text);
+    }
+
+    /**
      * @Then I should see in source
-     * @Then I see in source
      * @param string $raw
      */
-    public function iSeeInSource(string $raw)
+    public function iShouldSeeInSource(string $raw)
     {
         $this->webDriver->seeInSource($raw);
     }
 
     /**
      * @Then I should not see in source
-     * @Then I don't see in source
      * @param string $raw
      */
-    public function iDontSeeInSource(string $raw)
+    public function iShouldNotSeeInSource(string $raw)
     {
         $this->webDriver->dontSeeInSource($raw);
     }
