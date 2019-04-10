@@ -22,7 +22,9 @@ class WebdriverHelper extends Module implements DependsOnModule
             WebDriver::class => "Webdriver module required"
         ];
     }
+    // phpcs:enable
 
+    // phpcs:disable
     /**
      * @param WebDriver $webDriver
      */
@@ -31,6 +33,35 @@ class WebdriverHelper extends Module implements DependsOnModule
         $this->webDriver = $webDriver;
     }
     // phpcs:enable
+
+
+    /**
+     * @Then I make screenshot :name
+     * @param string $name
+     */
+    public function iMakeScreenshot(string $name)
+    {
+        $this->webDriver->makeScreenshot($name);
+    }
+
+    /**
+     * @When I resize window to :width and :height
+     * @param int $width
+     * @param int $height
+     */
+    public function iResizeWindow(int $width, int $height)
+    {
+        $this->webDriver->resizeWindow($width, $height);
+    }
+
+    /**
+     * @Given I am on url :url
+     * @param string $url
+     */
+    public function iAmOnUrl(string $url)
+    {
+        $this->webDriver->amOnUrl($url);
+    }
 
     /**
      * @Given I am on page :page
