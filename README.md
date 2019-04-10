@@ -6,3 +6,21 @@
 # Codeception Gherkin Helpers
 
 A collection a Gherkin helpers to use with Codeception
+
+# Installation & configuration
+
+```bash
+composer require --dev jeckel/codeception-gherkin-helpers
+```
+
+Then enable module n codeception, update ̀`acceptance.yml` :
+
+```yaml
+modules:
+  enabled:
+    - WebDriver
+    - \Test\Support\Helper\Acceptance
+    - \Jeckel\GherkinHelper\WebdriverHelper:
+      depends:
+        - WebDriver
+```
