@@ -88,7 +88,7 @@ class WebdriverHelper extends Module implements DependsOnModule, Context
     }
 
     /**
-     * @When I fill field ":field" with ":value"
+     * @When I fill field :field with :value
      * @param string $field
      * @param string $value
      */
