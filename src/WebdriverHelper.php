@@ -98,7 +98,8 @@ class WebdriverHelper extends Module implements DependsOnModule, Context
     }
 
     /**
-     * @Then /I (should see|see) :text/
+     * @Then I should see :text
+     * @Then I see :text
      * @param string $text
      */
     public function iShouldSee(string $text)
@@ -107,7 +108,8 @@ class WebdriverHelper extends Module implements DependsOnModule, Context
     }
 
     /**
-     * @Then /I (should not|don't) see :text/
+     * @Then I should not see :text
+     * @Then I don't see :text
      * @param string $text
      */
     public function iShouldNotSee(string $text)
@@ -116,7 +118,8 @@ class WebdriverHelper extends Module implements DependsOnModule, Context
     }
 
     /**
-     * @Then /I (should see|see) in source/
+     * @Then I should see in source
+     * @Then I see in source
      * @param string $raw
      */
     public function iSeeInSource(string $raw)
@@ -125,7 +128,8 @@ class WebdriverHelper extends Module implements DependsOnModule, Context
     }
 
     /**
-     * @Then /I (should not|don't) see in source/
+     * @Then I should not see in source
+     * @Then I don't see in source
      * @param string $raw
      */
     public function iDontSeeInSource(string $raw)
