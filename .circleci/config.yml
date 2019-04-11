@@ -59,10 +59,10 @@ jobs:
     executor: php73cli-alpine
     steps:
       - attach_workspace:
-        at: /home/circleci
-              - run:
-              name: PHP Stan
-              command: vendor/bin/phpstan analyse
+          at: /home/circleci
+      - run:
+          name: PHP Stan
+          command: vendor/bin/phpstan analyse
 
   phpcs:
     executor: php73cli-alpine
