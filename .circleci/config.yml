@@ -3,7 +3,7 @@ version: 2.1
 
 # Require orbs
 orbs:
-    codecov: codecov/codecov@1.0.4
+  codecov: codecov/codecov@1.0.4
 
 # Define reusable executors
 executors:
@@ -19,80 +19,74 @@ executors:
 
 # Configure Jobs:
 jobs:
-    composer:
-        executor: php73cli-alpine
-        steps:
-            - checkout
+  composer:
+    executor: php73cli-alpine
+    steps:
+      - checkout
 
-            - restore_cache:
-                  name: Restore composer's vendor cache
-                  keys:
-                      - vendor-v1-{{ checksum "composer.lock" }}
-            - run:
-                  name: Install composer deps
-                  command: composer install --no-suggest --no-interaction --ignore-platform-reqs
-            - save_cache:
-                  name: Save composer's vendor in cache
-                  key: vendor-v1-{{ checksum "composer.lock" }}
-                  paths:
-                      - "vendor"
-            - persist_to_workspace:
-                  root: /home/circleci
-                  paths: project
+      - restore_cache:
+          name: Restore composer's vendor cache
+          keys:
+            - vendor-v1-{{ checksum "composer.lock" }}
+      - run:
+          name: Install composer deps
+          command: composer install --no-suggest --no-interaction --ignore-platform-reqs
+      - save_cache:
+          name: Save composer's vendor in cache
+          key: vendor-v1-{{ checksum "composer.lock" }}
+          paths:
+            - "vendor"
+      - persist_to_workspace:
+          root: /home/circleci
+          paths: project
 
-    tests:
-        executor: php73cli-stretch
-        steps:
-            - attach_workspace:
-                at: /home/circleci
-            - run:
-                name: Codeception
-                command: vendor/bin/codecept run --coverage --coverage-html --coverage-xml
+  codeception:
+    executor: php73cli-stretch
+    steps:
+      - attach_workspace:
+          at: /home/circleci
+      - run:
+          name: Codeception
+          command: vendor/bin/codecept run --coverage --coverage-html --coverage-xml
 
-            - codecov/upload:
-                file: tests/_output/coverage.xml
+      - codecov/upload:
+          file: tests/_output/coverage.xml
 
-            - store_artifacts:
-                path: tests/_output
+      - store_artifacts:
+          path: tests/_output
 
-    phpstan:
-        docker:
-            - image: jeckel/php-test:7.3-cli-alpine
-        working_directory: /home/circleci/project
-        steps:
-            - attach_workspace:
-                  at: /home/circleci
-            - run:
-                  name: PHP Stan
-                  command: vendor/bin/phpstan analyse
+  phpstan:
+    executor: php73cli-alpine
+    steps:
+      - attach_workspace:
+        at: /home/circleci
+              - run:
+              name: PHP Stan
+              command: vendor/bin/phpstan analyse
 
-    phpcs:
-        docker:
-            - image: jeckel/php-test:7.3-cli-alpine
-        working_directory: /home/circleci/project
-        steps:
-            - attach_workspace:
-                  at: /home/circleci
-            - run:
-                  name: PHP Code Sniffer
-                  command: vendor/bin/phpcs
+  phpcs:
+    executor: php73cli-alpine
+    steps:
+      - attach_workspace:
+          at: /home/circleci
+      - run:
+          name: PHP Code Sniffer
+          command: vendor/bin/phpcs
 
-    phpmd:
-        docker:
-            - image: jeckel/php-test:7.3-cli-alpine
-        working_directory: /home/circleci/project
-        steps:
-            - attach_workspace:
-                  at: /home/circleci
-            - run:
-                  name: PHP Mess Detector
-                  command: vendor/bin/phpmd src text cleancode,codesize,design,naming,unusedcode
+  phpmd:
+    executor: php73cli-alpine
+    steps:
+      - attach_workspace:
+          at: /home/circleci
+      - run:
+          name: PHP Mess Detector
+          command: vendor/bin/phpmd src text cleancode,codesize,design,naming,unusedcode
 
-    builds_completed:
-        docker:
-            - image: docker:git
-        steps:
-            - run: echo "Builds completed with success"
+  builds_completed:
+    docker:
+      - image: docker:git
+    steps:
+      - run: echo "Builds completed with success"
 
 # Define the workflow:
 workflows:
@@ -100,7 +94,7 @@ workflows:
   build:
     jobs:
       - composer
-      - tests:
+      - codeception:
           requires:
             - composer
       - phpstan:
@@ -114,7 +108,7 @@ workflows:
             - composer
       - builds_completed:
           requires:
+            - codeception
             - phpstan
-            - tests
             - phpcs
             - phpmd
