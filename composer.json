@@ -12,12 +12,12 @@
     "minimum-stability": "stable",
     "autoload": {
         "psr-4": {
-            "Jeckel\\GherkinHelper\\": "src/"
+            "Jeckel\\Gherkin\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Test\\Jeckel\\GherkinHelper\\": "tests/unit/"
+            "Test\\Jeckel\\Gherkin\\": "tests/unit/"
         }
     },
     "require": {

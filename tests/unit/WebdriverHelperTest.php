@@ -1,10 +1,10 @@
 <?php
-namespace Test\Jeckel\GherkinHelper;
+namespace Test\Jeckel\Gherkin;
 
 use Codeception\Lib\ModuleContainer;
 use Codeception\Module\WebDriver;
 use Codeception\Test\Unit;
-use Jeckel\GherkinHelper\WebdriverHelper;
+use Jeckel\Gherkin\WebdriverHelper;
 use PHPUnit\Framework\MockObject\MockObject;
 
 /**

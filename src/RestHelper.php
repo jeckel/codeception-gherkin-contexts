@@ -1,5 +1,5 @@
 <?php
-namespace Jeckel\GherkinHelper;
+namespace Jeckel\Gherkin;
 
 use Behat\Behat\Context\Context;
 use Codeception\Lib\Interfaces\DependsOnModule;
