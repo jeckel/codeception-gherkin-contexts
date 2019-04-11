@@ -1,7 +1,12 @@
-[![Twitter](https://img.shields.io/badge/Twitter-%40jeckel4-blue.svg)](https://twitter.com/jeckel4) [![LinkedIn](https://img.shields.io/badge/LinkedIn-Julien%20Mercier-blue.svg)](https://www.linkedin.com/in/jeckel/) [![CircleCI](https://circleci.com/gh/jeckel/codeception-gherkin-helpers.svg?style=svg)](https://circleci.com/gh/jeckel/codeception-gherkin-helpers) [![codecov](https://codecov.io/gh/jeckel/codeception-gherkin-helpers/branch/master/graph/badge.svg)](https://codecov.io/gh/jeckel/codeception-gherkin-helpers)
+[![Latest Stable Version](https://poser.pugx.org/jeckel/codeception-gherkin-helpers/v/stable)](https://packagist.org/packages/jeckel/codeception-gherkin-helpers)
+[![Latest Unstable Version](https://poser.pugx.org/jeckel/codeception-gherkin-helpers/v/unstable)](https://packagist.org/packages/jeckel/codeception-gherkin-helpers)
+[![Total Downloads](https://poser.pugx.org/jeckel/codeception-gherkin-helpers/downloads?format=flat)](https://packagist.org/packages/jeckel/codeception-gherkin-helpers)
+[![CircleCI](https://circleci.com/gh/jeckel/codeception-gherkin-helpers.svg?style=svg)](https://circleci.com/gh/jeckel/codeception-gherkin-helpers)
+[![codecov](https://codecov.io/gh/jeckel/codeception-gherkin-helpers/branch/master/graph/badge.svg)](https://codecov.io/gh/jeckel/codeception-gherkin-helpers)
+[![Twitter](https://img.shields.io/badge/Twitter-%40jeckel4-blue.svg)](https://twitter.com/jeckel4)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-Julien%20Mercier--Rojas-blue.svg)](https://www.linkedin.com/in/jeckel/)
 
-
-# *!! Work in Progress !!* 
+# *⚠ Work in Progress ⚠* 
 
 # Codeception Gherkin Helpers
 
@@ -13,14 +18,14 @@ A collection a Gherkin helpers to use with Codeception
 composer require --dev jeckel/codeception-gherkin-helpers
 ```
 
-Then enable module n codeception, update ̀`acceptance.yml` :
+Then, to enable this module in codeception, just update `acceptance.yml` file like this:
 
 ```yaml
 modules:
   enabled:
     - WebDriver
-    - \Test\Support\Helper\Acceptance
+    - \Helper\Acceptance
     - \Jeckel\Gherkin\WebdriverHelper:
-      depends:
-        - WebDriver
+        depends:
+          - WebDriver
 ```
