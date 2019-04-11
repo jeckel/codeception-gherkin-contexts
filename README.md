@@ -20,7 +20,7 @@ modules:
   enabled:
     - WebDriver
     - \Test\Support\Helper\Acceptance
-    - \Jeckel\GherkinHelper\WebdriverHelper:
+    - \Jeckel\Gherkin\WebdriverHelper:
       depends:
         - WebDriver
 ```
