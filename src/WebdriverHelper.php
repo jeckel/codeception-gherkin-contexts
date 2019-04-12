@@ -2,6 +2,7 @@
 namespace Jeckel\Gherkin;
 
 use Behat\Behat\Context\Context;
+use Behat\Gherkin\Node\TableNode;
 use Codeception\Lib\Interfaces\DependsOnModule;
 use Codeception\Module\WebDriver;
 use Codeception\Module;
@@ -98,6 +99,16 @@ class WebdriverHelper extends Module implements DependsOnModule, Context
     }
 
     /**
+     * @When I submit form :form
+     * @param string $form
+     * @param TableNode|null $values
+     */
+    public function iSubmitForm(string $form, TableNode $values = null)
+    {
+        $this->webDriver->submitForm($form, $values->getRows());
+    }
+
+    /**
      * @Then I should see :text
      * @param string $text
      */
@@ -169,5 +180,59 @@ class WebdriverHelper extends Module implements DependsOnModule, Context
     public function iShouldNotSeeLinkWithUrl(string $link, string $url)
     {
         $this->webDriver->dontSeeLink($link, $url);
+    }
+
+    /**
+     * @Then I should see in current url :uri
+     * @param string $uri
+     */
+    public function iShouldSeeInCurrentUrl(string $uri)
+    {
+        $this->webDriver->seeInCurrentUrl($uri);
+    }
+
+    /**
+     * @Then I should not see in current url :uri
+     * @param string $uri
+     */
+    public function iShouldNotSeeInCurrentUrl(string $uri)
+    {
+        $this->webDriver->dontSeeInCurrentUrl($uri);
+    }
+
+    /**
+     * @Then I should see current url equals :uri
+     * @param string $uri
+     */
+    public function iShouldSeeCurrentUrlEquals(string $uri)
+    {
+        $this->webDriver->seeCurrentUrlEquals($uri);
+    }
+
+    /**
+     * @Then I should not see current url equals :uri
+     * @param string $uri
+     */
+    public function iShouldNotSeeCurrentUrlEquals(string $uri)
+    {
+        $this->webDriver->dontSeeCurrentUrlEquals($uri);
+    }
+
+    /**
+     * @Then I should see current url matches :uri
+     * @param string $uri
+     */
+    public function iShouldSeeCurrentUrlMatches(string $uri)
+    {
+        $this->webDriver->seeCurrentUrlMatches($uri);
+    }
+
+    /**
+     * @Then I should not see current url matches :uri
+     * @param string $uri
+     */
+    public function iShouldNotSeeCurrentUrlMatches(string $uri)
+    {
+        $this->webDriver->dontSeeCurrentUrlMatches($uri);
     }
 }
