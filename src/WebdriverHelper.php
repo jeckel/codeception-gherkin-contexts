@@ -105,7 +105,7 @@ class WebdriverHelper extends Module implements DependsOnModule, Context
      */
     public function iSubmitForm(string $form, TableNode $values = null)
     {
-        $this->webDriver->submitForm($form, $values->getRows());
+        $this->webDriver->submitForm($form, is_null($values) ? [] : $values->getRows());
     }
 
     /**
