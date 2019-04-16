@@ -35,6 +35,44 @@ class RestHelper extends Module implements DependsOnModule, Context
     // phpcs:enable
 
     /**
+     * @Given I have http header :header with value :value
+     * @param string $header
+     * @param string $value
+     */
+    public function iHaveHttpHeaderWithValue(string $header, string $value)
+    {
+        $this->rest->haveHttpHeader($header, $value);
+    }
+
+    /**
+     * @When I delete http header :header
+     * @param string $header
+     */
+    public function iDeleteHttpHeader(string $header)
+    {
+        $this->rest->deleteHeader($header);
+    }
+
+    /**
+     * @Then I should see http header :header
+     * @param string $header
+     */
+    public function iShouldSeeHttpHeader(string $header)
+    {
+        $this->rest->seeHttpHeader($header);
+    }
+
+    /**
+     * @Then I should see http header :header with value :value
+     * @param string $header
+     * @param string $value
+     */
+    public function iShouldSeeHttpHeaderWithValue(string $header, string $value)
+    {
+        $this->rest->seeHttpHeader($header, $value);
+    }
+
+    /**
      * @When I send a GET request to :arg1
      * @param string $url
      */
