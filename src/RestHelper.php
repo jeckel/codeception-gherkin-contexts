@@ -7,6 +7,11 @@ use Codeception\Lib\Interfaces\DependsOnModule;
 use Codeception\Module;
 use Codeception\Module\REST;
 
+/**
+ * Class RestHelper
+ * @package Jeckel\Gherkin
+ * @SuppressWarnings(PHPMD.TooManyPublicMethods)
+ */
 class RestHelper extends Module implements DependsOnModule, Context
 {
     /** @var REST */
