@@ -29,3 +29,7 @@ modules:
         depends:
           - WebDriver
 ```
+
+# Issues
+
+If you encounter some issues or want to request additional helpers / steps, you can add new [issues on github](https://github.com/jeckel/codeception-gherkin-helpers/issues).

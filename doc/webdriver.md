@@ -1,6 +1,6 @@
 # Webdriver Helper
 
-## Installation
+## Configuration
 
 ```yaml
 # File: tests/acceptance.suite.yml
@@ -16,9 +16,12 @@ modules:
 
 ## Featured steps
 
+This steps are mapped to original `Webdriver Module` functions. See full [Codeception Webdriver documentation](https://codeception.com/docs/modules/WebDriver).
 
+
+**List of steps already implemented in this helper:**
 ```gherkin
-  Feature: List helpers
+  Feature: List steps
     Given I am on url "url"
     Given I am on page "page"
     When I make screenshot "name"
@@ -47,3 +50,4 @@ lorem ipsume...
     Then I should see current url matches "uri"
     Then I should not see current url matches "uri"
 ```
+

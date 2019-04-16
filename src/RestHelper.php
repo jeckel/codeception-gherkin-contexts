@@ -73,7 +73,7 @@ class RestHelper extends Module implements DependsOnModule, Context
     }
 
     /**
-     * @When I send a GET request to :arg1
+     * @When I send a GET request to :url
      * @param string $url
      */
     public function iSendAGETRequestTo(string $url)
@@ -99,7 +99,7 @@ class RestHelper extends Module implements DependsOnModule, Context
     }
 
     /**
-     * @Then the JSON should be equal to: :json
+     * @Then the JSON should be equal to :json
      * @param string $json
      */
     public function theJSONShouldBeEqualTo(string $json)
