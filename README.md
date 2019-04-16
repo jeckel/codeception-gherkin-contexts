@@ -30,6 +30,10 @@ modules:
           - WebDriver
 ```
 
+# Documentation
+
+You can read the [full documentation with list of all proposed steps, configuration, etc.](https://github.com/jeckel/codeception-gherkin-helpers/blob/master/doc/readme.md)
+
 # Issues
 
 If you encounter some issues or want to request additional helpers / steps, you can add new [issues on github](https://github.com/jeckel/codeception-gherkin-helpers/issues).
