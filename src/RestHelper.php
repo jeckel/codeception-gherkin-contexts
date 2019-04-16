@@ -2,6 +2,7 @@
 namespace Jeckel\Gherkin;
 
 use Behat\Behat\Context\Context;
+use Behat\Gherkin\Node\TableNode;
 use Codeception\Lib\Interfaces\DependsOnModule;
 use Codeception\Module;
 use Codeception\Module\REST;
@@ -32,4 +33,75 @@ class RestHelper extends Module implements DependsOnModule, Context
         $this->rest = $rest;
     }
     // phpcs:enable
+
+    /**
+     * @When I send a GET request to :arg1
+     * @param string $url
+     */
+    public function iSendAGETRequestTo(string $url)
+    {
+        $this->rest->sendGET($url);
+    }
+
+    /**
+     * @Then the response status code should be :num
+     * @param int $num
+     */
+    public function theResponseStatusCodeShouldBe(int $num)
+    {
+        $this->rest->seeResponseCodeIs($num);
+    }
+
+    /**
+     * @Then the response should be in JSON
+     */
+    public function theResponseShouldBeInJSON()
+    {
+        $this->rest->seeResponseIsJson();
+    }
+
+    /**
+     * @Then the JSON should be equal to: :json
+     * @param string $json
+     */
+    public function theJSONShouldBeEqualTo(string $json)
+    {
+        $this->rest->seeResponseEquals($json);
+    }
+
+    /**
+     * @When I send a POST request to :url with parameters
+     * @param string $url
+     * @param TableNode $tableNode
+     */
+    public function iSendAPOSTRequestToWithParameters(string $url, TableNode $tableNode)
+    {
+        $this->rest->sendPost($url, $this->parseParams($tableNode));
+    }
+
+    /**
+     * @When I send a PUT request to :url with parameters
+     * @param string $url
+     * @param TableNode $tableNode
+     */
+    public function iSendAPUTRequestToWithParameters(string $url, TableNode $tableNode)
+    {
+        $this->rest->sendPut($url, $this->parseParams($tableNode));
+    }
+
+    /**
+     * @param TableNode $tableNode
+     * @return array
+     */
+    protected function parseParams(TableNode $tableNode): array
+    {
+        $parameters = [];
+        foreach ($tableNode->getRows() as $index => $row) {
+            if ($index === 0) { // first row to define fields
+                continue;
+            }
+            $parameters[$row[0]] = $row[1];
+        }
+        return $parameters;
+    }
 }
