@@ -12,7 +12,7 @@ modules:
     - REST:
         depends: PhpBrowser
         url: '%APPLICATION_URL%'
-    - \Jeckel\Gherkin\RestHelper:
+    - \Jeckel\Gherkin\RestContext:
         depends: REST
 ```
 

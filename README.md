@@ -25,14 +25,14 @@ modules:
   enabled:
     - WebDriver
     - \Helper\Acceptance
-    - \Jeckel\Gherkin\WebdriverHelper:
+    - \Jeckel\Gherkin\WebdriverContext:
         depends:
           - WebDriver
 ```
 
 # Documentation
 
-You can read the [full documentation with list of all proposed steps, configuration, etc.](https://github.com/jeckel/codeception-gherkin-helpers/blob/master/doc/readme.md)
+You can read the [full documentation with list of all proposed steps, configuration, etc.](https://github.com/jeckel/codeception-gherkin-helpers/blob/master/docs/readme.md)
 
 # Issues
 

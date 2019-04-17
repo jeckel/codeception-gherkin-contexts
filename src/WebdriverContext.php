@@ -12,7 +12,7 @@ use Codeception\Module;
  * @package Jeckel\GherkinHelper
  * @SuppressWarnings(PHPMD.TooManyPublicMethods)
  */
-class WebdriverHelper extends Module implements DependsOnModule, Context
+class WebdriverContext extends Module implements DependsOnModule, Context
 {
     /**
      * @var WebDriver
@@ -77,6 +77,14 @@ class WebdriverHelper extends Module implements DependsOnModule, Context
     public function iAmOnPage(string $page)
     {
         $this->webDriver->amOnPage($page);
+    }
+
+    /**
+     * @Given I am on homepage
+     */
+    public function iAmOnHomepage()
+    {
+        $this->webDriver->amOnPage('/');
     }
 
     /**

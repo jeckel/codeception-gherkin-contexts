@@ -12,7 +12,7 @@ use Codeception\Module\REST;
  * @package Jeckel\Gherkin
  * @SuppressWarnings(PHPMD.TooManyPublicMethods)
  */
-class RestHelper extends Module implements DependsOnModule, Context
+class RestContext extends Module implements DependsOnModule, Context
 {
     /** @var REST */
     protected $rest;

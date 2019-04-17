@@ -9,7 +9,7 @@ modules:
   enabled:
     - WebDriver
     - \Helper\Acceptance
-    - \Jeckel\Gherkin\WebdriverHelper:
+    - \Jeckel\Gherkin\WebdriverContext:
         depends:
           - WebDriver
 ```
@@ -24,6 +24,7 @@ This steps are mapped to original `Webdriver Module` functions. See full [Codece
   Feature: List steps
     Given I am on url "url"
     Given I am on page "page"
+    Given I am on homepage
     When I make screenshot "name"
     When I resize window to "width" and "height"
     When I click "link"
