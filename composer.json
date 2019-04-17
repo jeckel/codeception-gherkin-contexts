@@ -1,5 +1,5 @@
 {
-    "name": "jeckel/codeception-gherkin-helpers",
+    "name": "jeckel/codeception-gherkin-contexts",
     "description": "A collection of Codeception Helpers for Gherkin BDD tests",
     "type": "library",
     "license": "MIT",
