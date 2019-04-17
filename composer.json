@@ -1,5 +1,5 @@
 {
-    "name": "jeckel/codeception-gherkin-helpers",
+    "name": "jeckel/codeception-gherkin-contexts",
     "description": "A collection of Codeception Helpers for Gherkin BDD tests",
     "type": "library",
     "license": "MIT",
@@ -28,5 +28,8 @@
         "phpstan/phpstan": "^0.11.5",
         "squizlabs/php_codesniffer": "^3.4",
         "phpmd/phpmd": "^2.6"
+    },
+    "suggest": {
+        "edno/codeception-gherkin-param": "The Codeception extension for supporting parameter notation in Gherkin scenario."
     }
 }

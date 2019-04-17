@@ -4,14 +4,14 @@ namespace Test\Jeckel\Gherkin;
 use Codeception\Lib\ModuleContainer;
 use Codeception\Module\WebDriver;
 use Codeception\Test\Unit;
-use Jeckel\Gherkin\WebdriverHelper;
+use Jeckel\Gherkin\WebdriverContext;
 use PHPUnit\Framework\MockObject\MockObject;
 
 /**
  * Class WebdriverHelperTest
  * @package Test\Jeckel\GherkinHelper
  */
-class WebdriverHelperTest extends Unit
+class WebdriverContextTest extends Unit
 {
     /**
      * @var MockObject | WebDriver
@@ -19,7 +19,7 @@ class WebdriverHelperTest extends Unit
     protected $webdriver;
 
     /**
-     * @var WebdriverHelper
+     * @var WebdriverContext
      */
     protected $helper;
 
@@ -31,7 +31,7 @@ class WebdriverHelperTest extends Unit
         $this->webdriver = $this->createMock(WebDriver::class);
         /** @var MockObject | ModuleContainer $moduleContainer */
         $moduleContainer = $this->createMock(ModuleContainer::class);
-        $this->helper = new WebdriverHelper($moduleContainer);
+        $this->helper = new WebdriverContext($moduleContainer);
         $this->helper->_inject($this->webdriver);
 
         return parent::setUp();

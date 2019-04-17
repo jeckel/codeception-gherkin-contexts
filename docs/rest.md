@@ -12,7 +12,7 @@ modules:
     - REST:
         depends: PhpBrowser
         url: '%APPLICATION_URL%'
-    - \Jeckel\Gherkin\RestHelper:
+    - \Jeckel\Gherkin\RestContext:
         depends: REST
 ```
 
@@ -46,4 +46,5 @@ This steps are mapped to original `Rest Module` functions. See full [Codeception
       | field        | value        |
       | new_username | bob93        |
       | new_email    | foo@bar.com  |
+    Then I should see response json matches JsonPath "$.path"
 ```

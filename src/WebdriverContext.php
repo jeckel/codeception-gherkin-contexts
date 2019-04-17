@@ -1,22 +1,28 @@
 <?php
+
 namespace Jeckel\Gherkin;
 
-use Behat\Behat\Context\Context;
 use Behat\Gherkin\Node\TableNode;
 use Codeception\Lib\Interfaces\DependsOnModule;
 use Codeception\Module\WebDriver;
-use Codeception\Module;
 
 /**
  * Class WebdriverHelper
  * @package Jeckel\GherkinHelper
  * @SuppressWarnings(PHPMD.TooManyPublicMethods)
  */
-class WebdriverHelper extends Module implements DependsOnModule, Context
+class WebdriverContext extends ContextAbstract implements DependsOnModule
 {
     /**
-     * @var WebDriver
+     * Allows to explicitly set what methods have this class.
+     *
+     * All methods in this context should be use in Gherkin file, not as Action in CEST files
+     *
+     * @var array
      */
+    public static $onlyActions = [];
+
+    /** @var WebDriver */
     protected $webDriver;
 
     // phpcs:disable
@@ -26,21 +32,20 @@ class WebdriverHelper extends Module implements DependsOnModule, Context
     public function _depends(): array
     {
         return [
-            WebDriver::class => "Webdriver module required"
+            WebDriver::class => "Webdriver module required",
         ];
     }
     // phpcs:enable
 
     // phpcs:disable
     /**
-     * @param WebDriver $webDriver
+     * @param WebDriver       $webDriver
      */
     public function _inject(WebDriver $webDriver)
     {
         $this->webDriver = $webDriver;
     }
     // phpcs:enable
-
 
     /**
      * @When I make screenshot :name
@@ -80,6 +85,14 @@ class WebdriverHelper extends Module implements DependsOnModule, Context
     }
 
     /**
+     * @Given I am on homepage
+     */
+    public function iAmOnHomepage()
+    {
+        $this->webDriver->amOnPage('/');
+    }
+
+    /**
      * @When I click :link
      * @param string $link
      */
@@ -100,12 +113,12 @@ class WebdriverHelper extends Module implements DependsOnModule, Context
 
     /**
      * @When I submit form :form
-     * @param string $form
+     * @param string         $form
      * @param TableNode|null $values
      */
     public function iSubmitForm(string $form, TableNode $values = null)
     {
-        $this->webDriver->submitForm($form, is_null($values) ? [] : $values->getRows());
+        $this->webDriver->submitForm($form, is_null($values) ? [] : self::parseTableNode($values));
     }
 
     /**
