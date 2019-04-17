@@ -5,6 +5,7 @@ namespace Jeckel\Gherkin;
 use Behat\Gherkin\Node\TableNode;
 use Codeception\Lib\Interfaces\DependsOnModule;
 use Codeception\Module\WebDriver;
+use Codeception\Util\Fixtures;
 
 /**
  * Class WebdriverHelper
@@ -90,6 +91,16 @@ class WebdriverContext extends ContextAbstract implements DependsOnModule
     public function iFillField(string $field, string $value)
     {
         $this->webDriver->fillField($field, $value);
+    }
+
+    /**
+     * @Then I grab text from :from into fixture :fixtureKey
+     * @param string $from
+     * @param string $fixtureKey
+     */
+    public function iGrabTextFromIntoFixture(string $from, string $fixtureKey)
+    {
+        Fixtures::add($fixtureKey, $this->webDriver->grabTextFrom($from));
     }
 
     /**
