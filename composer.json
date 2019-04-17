@@ -21,6 +21,7 @@
         }
     },
     "require": {
+        "php": ">=7.0",
         "codeception/codeception": "^2.5",
         "behat/behat": "^3.5"
     },
@@ -30,6 +31,7 @@
         "phpmd/phpmd": "^2.6"
     },
     "suggest": {
-        "edno/codeception-gherkin-param": "The Codeception extension for supporting parameter notation in Gherkin scenario."
+        "edno/codeception-gherkin-param": "The Codeception extension for supporting parameter notation in Gherkin scenario.",
+        "flow/jsonpath" : "Json path parser",
     }
 }
