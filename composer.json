@@ -32,6 +32,6 @@
     },
     "suggest": {
         "edno/codeception-gherkin-param": "The Codeception extension for supporting parameter notation in Gherkin scenario.",
-        "flow/jsonpath" : "Json path parser",
+        "flow/jsonpath" : "Json path parser"
     }
 }
