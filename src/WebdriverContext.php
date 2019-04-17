@@ -1,4 +1,5 @@
 <?php
+
 namespace Jeckel\Gherkin;
 
 use Behat\Behat\Context\Context;
@@ -14,33 +15,39 @@ use Codeception\Module;
  */
 class WebdriverContext extends Module implements DependsOnModule, Context
 {
-    /**
-     * @var WebDriver
-     */
+    /** @var WebDriver */
     protected $webDriver;
 
+    /** @var ParameterParser */
+    protected $paramParser;
+
     // phpcs:disable
+
     /**
      * @return array
      */
     public function _depends(): array
     {
         return [
-            WebDriver::class => "Webdriver module required"
+            WebDriver::class => "Webdriver module required",
         ];
     }
     // phpcs:enable
 
     // phpcs:disable
     /**
-     * @param WebDriver $webDriver
+     * @param WebDriver       $webDriver
+     * @param ParameterParser $paramParser
      */
-    public function _inject(WebDriver $webDriver)
+    public function _inject(
+        WebDriver $webDriver,
+        ParameterParser $paramParser
+    )
     {
         $this->webDriver = $webDriver;
+        $this->paramParser = $paramParser;
     }
     // phpcs:enable
-
 
     /**
      * @When I make screenshot :name
@@ -108,12 +115,12 @@ class WebdriverContext extends Module implements DependsOnModule, Context
 
     /**
      * @When I submit form :form
-     * @param string $form
+     * @param string         $form
      * @param TableNode|null $values
      */
     public function iSubmitForm(string $form, TableNode $values = null)
     {
-        $this->webDriver->submitForm($form, is_null($values) ? [] : $values->getRows());
+        $this->webDriver->submitForm($form, is_null($values) ? [] : $this->paramParser->parseTableNode($values));
     }
 
     /**

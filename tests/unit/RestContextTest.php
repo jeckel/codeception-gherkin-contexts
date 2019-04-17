@@ -11,6 +11,7 @@ use Behat\Gherkin\Node\TableNode;
 use Codeception\Lib\ModuleContainer;
 use Codeception\Module\REST;
 use Codeception\Test\Unit;
+use Jeckel\Gherkin\ParameterParser;
 use Jeckel\Gherkin\RestContext;
 use PHPUnit\Framework\MockObject\MockObject;
 
@@ -31,22 +32,26 @@ class RestContextTest extends Unit
 
         /** @var MockObject | ModuleContainer $moduleContainer */
         $moduleContainer = $this->createMock(ModuleContainer::class);
+
         $this->helper = new RestContext($moduleContainer);
-        $this->helper->_inject($this->rest);
+        $this->helper->_inject($this->rest, new ParameterParser());
 
         return parent::setUp();
     }
 
+    /**
+     * @test iSendAPOSTRequestToWithParameters
+     */
     public function testISendAPOSTRequestToWithParameters()
     {
         $rows = [
             ['field', 'value'],
             ['login', 'bob'],
-            ['password', '123Password!']
+            ['password', '123Password!'],
         ];
         $expected = [
             'login' => 'bob',
-            'password' => '123Password!'
+            'password' => '123Password!',
         ];
         $tableNode = $this->createMock(TableNode::class);
         $tableNode->expects($this->once())
@@ -60,16 +65,19 @@ class RestContextTest extends Unit
         $this->helper->iSendAPOSTRequestToWithParameters('http://foo.bar', $tableNode);
     }
 
+    /**
+     * @test iSendAPUTRequestToWithParameters
+     */
     public function testISendAPUTRequestToWithParameters()
     {
         $rows = [
             ['field', 'value'],
             ['login', 'bob'],
-            ['password', '123Password!']
+            ['password', '123Password!'],
         ];
         $expected = [
             'login' => 'bob',
-            'password' => '123Password!'
+            'password' => '123Password!',
         ];
         $tableNode = $this->createMock(TableNode::class);
         $tableNode->expects($this->once())

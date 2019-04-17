@@ -1,4 +1,5 @@
 <?php
+
 namespace Jeckel\Gherkin;
 
 use Behat\Behat\Context\Context;
@@ -17,25 +18,34 @@ class RestContext extends Module implements DependsOnModule, Context
     /** @var REST */
     protected $rest;
 
+    /** @var ParameterParser */
+    protected $paramParser;
+
     // phpcs:disable
+
     /**
      * @return array
      */
     public function _depends()
     {
         return [
-            REST::class => "REST module required"
+            REST::class => "REST module required",
         ];
     }
     // phpcs:enable
 
     // phpcs:disable
     /**
-     * @param REST $rest
+     * @param REST            $rest
+     * @param ParameterParser $paramParser
      */
-    public function _inject(REST $rest)
+    public function _inject(
+        REST $rest,
+        ParameterParser $paramParser
+    )
     {
         $this->rest = $rest;
+        $this->paramParser = $paramParser;
     }
     // phpcs:enable
 
@@ -114,37 +124,30 @@ class RestContext extends Module implements DependsOnModule, Context
 
     /**
      * @When I send a POST request to :url with parameters
-     * @param string $url
+     * @param string    $url
      * @param TableNode $tableNode
      */
     public function iSendAPOSTRequestToWithParameters(string $url, TableNode $tableNode)
     {
-        $this->rest->sendPost($url, $this->parseParams($tableNode));
+        $this->rest->sendPost($url, $this->paramParser->parseTableNode($tableNode));
     }
 
     /**
      * @When I send a PUT request to :url with parameters
-     * @param string $url
+     * @param string    $url
      * @param TableNode $tableNode
      */
     public function iSendAPUTRequestToWithParameters(string $url, TableNode $tableNode)
     {
-        $this->rest->sendPut($url, $this->parseParams($tableNode));
+        $this->rest->sendPut($url, $this->paramParser->parseTableNode($tableNode));
     }
 
     /**
-     * @param TableNode $tableNode
-     * @return array
+     * @Then I should see response json matches JsonPath :path
+     * @param string $path
      */
-    protected function parseParams(TableNode $tableNode): array
+    public function iShouldSeeResponseJsonMatchesJsonPath(string $path)
     {
-        $parameters = [];
-        foreach ($tableNode->getRows() as $index => $row) {
-            if ($index === 0) { // first row to define fields
-                continue;
-            }
-            $parameters[$row[0]] = $row[1];
-        }
-        return $parameters;
+        $this->rest->seeResponseJsonMatchesJsonPath($path);
     }
 }
