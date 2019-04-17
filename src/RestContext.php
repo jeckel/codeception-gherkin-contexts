@@ -5,6 +5,8 @@ namespace Jeckel\Gherkin;
 use Behat\Gherkin\Node\TableNode;
 use Codeception\Lib\Interfaces\DependsOnModule;
 use Codeception\Module\REST;
+use Codeception\Util\Fixtures;
+use Exception;
 
 /**
  * Class RestHelper
@@ -49,13 +51,12 @@ class RestContext extends ContextAbstract implements DependsOnModule
     // phpcs:enable
 
     /**
-     * @Given I have http header :header with value :value
-     * @param string $header
-     * @param string $value
+     * @When I am bearer authenticated :bearer
+     * @param string $bearer
      */
-    public function iHaveHttpHeaderWithValue(string $header, string $value)
+    public function iAmBearerAuthenticated(string $bearer)
     {
-        $this->rest->haveHttpHeader($header, $value);
+        $this->rest->amBearerAuthenticated($bearer);
     }
 
     /**
@@ -68,22 +69,24 @@ class RestContext extends ContextAbstract implements DependsOnModule
     }
 
     /**
-     * @Then I should see http header :header
-     * @param string $header
+     * @Then I grab data from response by json path :path into fixture :key
+     * @param string $path
+     * @param string $key
+     * @throws Exception
      */
-    public function iShouldSeeHttpHeader(string $header)
+    public function iGrabDataFromResponseByJsonPathIntoFixture(string $path, string $key)
     {
-        $this->rest->seeHttpHeader($header);
+        Fixtures::add($key, $this->rest->grabDataFromResponseByJsonPath($path));
     }
 
     /**
-     * @Then I should see http header :header with value :value
+     * @Given I have http header :header with value :value
      * @param string $header
      * @param string $value
      */
-    public function iShouldSeeHttpHeaderWithValue(string $header, string $value)
+    public function iHaveHttpHeaderWithValue(string $header, string $value)
     {
-        $this->rest->seeHttpHeader($header, $value);
+        $this->rest->haveHttpHeader($header, $value);
     }
 
     /**
@@ -93,32 +96,6 @@ class RestContext extends ContextAbstract implements DependsOnModule
     public function iSendAGETRequestTo(string $url)
     {
         $this->rest->sendGET($url);
-    }
-
-    /**
-     * @Then the response status code should be :num
-     * @param int $num
-     */
-    public function theResponseStatusCodeShouldBe(int $num)
-    {
-        $this->rest->seeResponseCodeIs($num);
-    }
-
-    /**
-     * @Then the response should be in JSON
-     */
-    public function theResponseShouldBeInJSON()
-    {
-        $this->rest->seeResponseIsJson();
-    }
-
-    /**
-     * @Then the JSON should be equal to :json
-     * @param string $json
-     */
-    public function theJSONShouldBeEqualTo(string $json)
-    {
-        $this->rest->seeResponseEquals($json);
     }
 
     /**
@@ -142,11 +119,56 @@ class RestContext extends ContextAbstract implements DependsOnModule
     }
 
     /**
+     * @Then I should see http header :header
+     * @param string $header
+     */
+    public function iShouldSeeHttpHeader(string $header)
+    {
+        $this->rest->seeHttpHeader($header);
+    }
+
+    /**
+     * @Then I should see http header :header with value :value
+     * @param string $header
+     * @param string $value
+     */
+    public function iShouldSeeHttpHeaderWithValue(string $header, string $value)
+    {
+        $this->rest->seeHttpHeader($header, $value);
+    }
+
+    /**
      * @Then I should see response json matches JsonPath :path
      * @param string $path
      */
     public function iShouldSeeResponseJsonMatchesJsonPath(string $path)
     {
         $this->rest->seeResponseJsonMatchesJsonPath($path);
+    }
+
+    /**
+     * @Then the JSON should be equal to :json
+     * @param string $json
+     */
+    public function theJSONShouldBeEqualTo(string $json)
+    {
+        $this->rest->seeResponseEquals($json);
+    }
+
+    /**
+     * @Then the response should be in JSON
+     */
+    public function theResponseShouldBeInJSON()
+    {
+        $this->rest->seeResponseIsJson();
+    }
+
+    /**
+     * @Then the response status code should be :num
+     * @param int $num
+     */
+    public function theResponseStatusCodeShouldBe(int $num)
+    {
+        $this->rest->seeResponseCodeIs($num);
     }
 }

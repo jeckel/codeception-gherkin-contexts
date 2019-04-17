@@ -48,31 +48,11 @@ class WebdriverContext extends ContextAbstract implements DependsOnModule
     // phpcs:enable
 
     /**
-     * @When I make screenshot :name
-     * @param string $name
+     * @Given I am on homepage
      */
-    public function iMakeScreenshot(string $name)
+    public function iAmOnHomepage()
     {
-        $this->webDriver->makeScreenshot($name);
-    }
-
-    /**
-     * @When I resize window to :width and :height
-     * @param int $width
-     * @param int $height
-     */
-    public function iResizeWindow(int $width, int $height)
-    {
-        $this->webDriver->resizeWindow($width, $height);
-    }
-
-    /**
-     * @Given I am on url :url
-     * @param string $url
-     */
-    public function iAmOnUrl(string $url)
-    {
-        $this->webDriver->amOnUrl($url);
+        $this->webDriver->amOnPage('/');
     }
 
     /**
@@ -85,11 +65,12 @@ class WebdriverContext extends ContextAbstract implements DependsOnModule
     }
 
     /**
-     * @Given I am on homepage
+     * @Given I am on url :url
+     * @param string $url
      */
-    public function iAmOnHomepage()
+    public function iAmOnUrl(string $url)
     {
-        $this->webDriver->amOnPage('/');
+        $this->webDriver->amOnUrl($url);
     }
 
     /**
@@ -112,22 +93,22 @@ class WebdriverContext extends ContextAbstract implements DependsOnModule
     }
 
     /**
-     * @When I submit form :form
-     * @param string         $form
-     * @param TableNode|null $values
+     * @When I make screenshot :name
+     * @param string $name
      */
-    public function iSubmitForm(string $form, TableNode $values = null)
+    public function iMakeScreenshot(string $name)
     {
-        $this->webDriver->submitForm($form, is_null($values) ? [] : self::parseTableNode($values));
+        $this->webDriver->makeScreenshot($name);
     }
 
     /**
-     * @Then I should see :text
-     * @param string $text
+     * @When I resize window to :width and :height
+     * @param int $width
+     * @param int $height
      */
-    public function iShouldSee(string $text)
+    public function iResizeWindow(int $width, int $height)
     {
-        $this->webDriver->see($text);
+        $this->webDriver->resizeWindow($width, $height);
     }
 
     /**
@@ -140,12 +121,30 @@ class WebdriverContext extends ContextAbstract implements DependsOnModule
     }
 
     /**
-     * @Then I should see in source
-     * @param string $raw
+     * @Then I should not see current url equals :uri
+     * @param string $uri
      */
-    public function iShouldSeeInSource(string $raw)
+    public function iShouldNotSeeCurrentUrlEquals(string $uri)
     {
-        $this->webDriver->seeInSource($raw);
+        $this->webDriver->dontSeeCurrentUrlEquals($uri);
+    }
+
+    /**
+     * @Then I should not see current url matches :uri
+     * @param string $uri
+     */
+    public function iShouldNotSeeCurrentUrlMatches(string $uri)
+    {
+        $this->webDriver->dontSeeCurrentUrlMatches($uri);
+    }
+
+    /**
+     * @Then I should not see in current url :uri
+     * @param string $uri
+     */
+    public function iShouldNotSeeInCurrentUrl(string $uri)
+    {
+        $this->webDriver->dontSeeInCurrentUrl($uri);
     }
 
     /**
@@ -155,25 +154,6 @@ class WebdriverContext extends ContextAbstract implements DependsOnModule
     public function iShouldNotSeeInSource(string $raw)
     {
         $this->webDriver->dontSeeInSource($raw);
-    }
-
-    /**
-     * @Then I should see link :link
-     * @param string $link
-     */
-    public function iShouldSeeLink(string $link)
-    {
-        $this->webDriver->seeLink($link);
-    }
-
-    /**
-     * @Then I should see link :link with url :url
-     * @param string $link
-     * @param string $url
-     */
-    public function iShouldSeeLinkWithUrl(string $link, string $url)
-    {
-        $this->webDriver->seeLink($link, $url);
     }
 
     /**
@@ -196,21 +176,12 @@ class WebdriverContext extends ContextAbstract implements DependsOnModule
     }
 
     /**
-     * @Then I should see in current url :uri
-     * @param string $uri
+     * @Then I should see :text
+     * @param string $text
      */
-    public function iShouldSeeInCurrentUrl(string $uri)
+    public function iShouldSee(string $text)
     {
-        $this->webDriver->seeInCurrentUrl($uri);
-    }
-
-    /**
-     * @Then I should not see in current url :uri
-     * @param string $uri
-     */
-    public function iShouldNotSeeInCurrentUrl(string $uri)
-    {
-        $this->webDriver->dontSeeInCurrentUrl($uri);
+        $this->webDriver->see($text);
     }
 
     /**
@@ -223,15 +194,6 @@ class WebdriverContext extends ContextAbstract implements DependsOnModule
     }
 
     /**
-     * @Then I should not see current url equals :uri
-     * @param string $uri
-     */
-    public function iShouldNotSeeCurrentUrlEquals(string $uri)
-    {
-        $this->webDriver->dontSeeCurrentUrlEquals($uri);
-    }
-
-    /**
      * @Then I should see current url matches :uri
      * @param string $uri
      */
@@ -241,11 +203,49 @@ class WebdriverContext extends ContextAbstract implements DependsOnModule
     }
 
     /**
-     * @Then I should not see current url matches :uri
+     * @Then I should see in current url :uri
      * @param string $uri
      */
-    public function iShouldNotSeeCurrentUrlMatches(string $uri)
+    public function iShouldSeeInCurrentUrl(string $uri)
     {
-        $this->webDriver->dontSeeCurrentUrlMatches($uri);
+        $this->webDriver->seeInCurrentUrl($uri);
+    }
+
+    /**
+     * @Then I should see in source
+     * @param string $raw
+     */
+    public function iShouldSeeInSource(string $raw)
+    {
+        $this->webDriver->seeInSource($raw);
+    }
+
+    /**
+     * @Then I should see link :link
+     * @param string $link
+     */
+    public function iShouldSeeLink(string $link)
+    {
+        $this->webDriver->seeLink($link);
+    }
+
+    /**
+     * @Then I should see link :link with url :url
+     * @param string $link
+     * @param string $url
+     */
+    public function iShouldSeeLinkWithUrl(string $link, string $url)
+    {
+        $this->webDriver->seeLink($link, $url);
+    }
+
+    /**
+     * @When I submit form :form
+     * @param string         $form
+     * @param TableNode|null $values
+     */
+    public function iSubmitForm(string $form, TableNode $values = null)
+    {
+        $this->webDriver->submitForm($form, is_null($values) ? [] : self::parseTableNode($values));
     }
 }
