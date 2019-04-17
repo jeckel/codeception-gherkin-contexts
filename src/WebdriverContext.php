@@ -7,6 +7,7 @@ use Behat\Gherkin\Node\TableNode;
 use Codeception\Lib\Interfaces\DependsOnModule;
 use Codeception\Module\WebDriver;
 use Codeception\Module;
+use Codeception\TestInterface;
 
 /**
  * Class WebdriverHelper
@@ -21,8 +22,10 @@ class WebdriverContext extends Module implements DependsOnModule, Context
     /** @var ParameterParser */
     protected $paramParser;
 
-    // phpcs:disable
+    /** @var TestInterface */
+    protected $test;
 
+    // phpcs:disable
     /**
      * @return array
      */
@@ -37,15 +40,23 @@ class WebdriverContext extends Module implements DependsOnModule, Context
     // phpcs:disable
     /**
      * @param WebDriver       $webDriver
-     * @param ParameterParser $paramParser
      */
     public function _inject(
-        WebDriver $webDriver,
-        ParameterParser $paramParser
+        WebDriver $webDriver
     )
     {
         $this->webDriver = $webDriver;
-        $this->paramParser = $paramParser;
+    }
+    // phpcs:enable
+
+    // phpcs:disable
+    /**
+     * @param TestInterface $test
+     */
+    public function _before(TestInterface $test)
+    {
+        parent::_before($test);
+        $this->debug(get_class($test));
     }
     // phpcs:enable
 

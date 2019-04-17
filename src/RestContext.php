@@ -5,8 +5,10 @@ namespace Jeckel\Gherkin;
 use Behat\Behat\Context\Context;
 use Behat\Gherkin\Node\TableNode;
 use Codeception\Lib\Interfaces\DependsOnModule;
+use Codeception\Lib\ModuleContainer;
 use Codeception\Module;
 use Codeception\Module\REST;
+use Codeception\TestInterface;
 
 /**
  * Class RestHelper
@@ -15,14 +17,25 @@ use Codeception\Module\REST;
  */
 class RestContext extends Module implements DependsOnModule, Context
 {
+    /**
+     * Allows to explicitly set what methods have this class.
+     *
+     * All methods in this context should be use in Gherkin file, not as Action in CEST files
+     *
+     * @var array
+     */
+    public static $onlyActions = [];
+
     /** @var REST */
     protected $rest;
 
     /** @var ParameterParser */
     protected $paramParser;
 
-    // phpcs:disable
+    /** @var TestInterface */
+    protected $test;
 
+    // phpcs:disable
     /**
      * @return array
      */
@@ -37,17 +50,33 @@ class RestContext extends Module implements DependsOnModule, Context
     // phpcs:disable
     /**
      * @param REST            $rest
-     * @param ParameterParser $paramParser
      */
     public function _inject(
-        REST $rest,
-        ParameterParser $paramParser
+        REST $rest
     )
     {
         $this->rest = $rest;
-        $this->paramParser = $paramParser;
     }
     // phpcs:enable
+
+    // phpcs:disable
+    /**
+     * @param TestInterface $test
+     */
+    public function _before(TestInterface $test)
+    {
+        parent::_before($test);
+        $this->debug(get_class($test));
+    }
+    // phpcs:enable
+
+    /**
+     * @param ParameterParser $paramParser
+     */
+    public function setParameterParser(ParameterParser $paramParser)
+    {
+        $this->paramParser = $paramParser;
+    }
 
     /**
      * @Given I have http header :header with value :value
