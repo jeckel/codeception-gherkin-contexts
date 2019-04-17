@@ -1,5 +1,4 @@
 <?php
-
 namespace Jeckel\Gherkin;
 
 use Behat\Gherkin\Node\TableNode;
