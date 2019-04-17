@@ -2,20 +2,16 @@
 
 namespace Jeckel\Gherkin;
 
-use Behat\Behat\Context\Context;
 use Behat\Gherkin\Node\TableNode;
 use Codeception\Lib\Interfaces\DependsOnModule;
-use Codeception\Lib\ModuleContainer;
-use Codeception\Module;
 use Codeception\Module\REST;
-use Codeception\TestInterface;
 
 /**
  * Class RestHelper
  * @package Jeckel\Gherkin
  * @SuppressWarnings(PHPMD.TooManyPublicMethods)
  */
-class RestContext extends Module implements DependsOnModule, Context
+class RestContext extends ContextAbstract implements DependsOnModule
 {
     /**
      * Allows to explicitly set what methods have this class.
@@ -29,13 +25,8 @@ class RestContext extends Module implements DependsOnModule, Context
     /** @var REST */
     protected $rest;
 
-    /** @var ParameterParser */
-    protected $paramParser;
-
-    /** @var TestInterface */
-    protected $test;
-
     // phpcs:disable
+
     /**
      * @return array
      */
@@ -49,34 +40,13 @@ class RestContext extends Module implements DependsOnModule, Context
 
     // phpcs:disable
     /**
-     * @param REST            $rest
+     * @param REST $rest
      */
-    public function _inject(
-        REST $rest
-    )
+    public function _inject(REST $rest)
     {
         $this->rest = $rest;
     }
     // phpcs:enable
-
-    // phpcs:disable
-    /**
-     * @param TestInterface $test
-     */
-    public function _before(TestInterface $test)
-    {
-        parent::_before($test);
-        $this->debug(get_class($test));
-    }
-    // phpcs:enable
-
-    /**
-     * @param ParameterParser $paramParser
-     */
-    public function setParameterParser(ParameterParser $paramParser)
-    {
-        $this->paramParser = $paramParser;
-    }
 
     /**
      * @Given I have http header :header with value :value
@@ -158,7 +128,7 @@ class RestContext extends Module implements DependsOnModule, Context
      */
     public function iSendAPOSTRequestToWithParameters(string $url, TableNode $tableNode)
     {
-        $this->rest->sendPost($url, $this->paramParser->parseTableNode($tableNode));
+        $this->rest->sendPost($url, self::parseTableNode($tableNode));
     }
 
     /**
@@ -168,7 +138,7 @@ class RestContext extends Module implements DependsOnModule, Context
      */
     public function iSendAPUTRequestToWithParameters(string $url, TableNode $tableNode)
     {
-        $this->rest->sendPut($url, $this->paramParser->parseTableNode($tableNode));
+        $this->rest->sendPut($url, self::parseTableNode($tableNode));
     }
 
     /**

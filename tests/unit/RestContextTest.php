@@ -11,7 +11,6 @@ use Behat\Gherkin\Node\TableNode;
 use Codeception\Lib\ModuleContainer;
 use Codeception\Module\REST;
 use Codeception\Test\Unit;
-use Jeckel\Gherkin\ParameterParser;
 use Jeckel\Gherkin\RestContext;
 use PHPUnit\Framework\MockObject\MockObject;
 
@@ -35,7 +34,6 @@ class RestContextTest extends Unit
 
         $this->helper = new RestContext($moduleContainer);
         $this->helper->_inject($this->rest);
-        $this->helper->setParameterParser(new ParameterParser());
 
         return parent::setUp();
     }

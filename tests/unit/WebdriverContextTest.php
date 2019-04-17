@@ -4,7 +4,6 @@ namespace Test\Jeckel\Gherkin;
 use Codeception\Lib\ModuleContainer;
 use Codeception\Module\WebDriver;
 use Codeception\Test\Unit;
-use Jeckel\Gherkin\ParameterParser;
 use Jeckel\Gherkin\WebdriverContext;
 use PHPUnit\Framework\MockObject\MockObject;
 
@@ -33,7 +32,7 @@ class WebdriverContextTest extends Unit
         /** @var MockObject | ModuleContainer $moduleContainer */
         $moduleContainer = $this->createMock(ModuleContainer::class);
         $this->helper = new WebdriverContext($moduleContainer);
-        $this->helper->_inject($this->webdriver, new ParameterParser());
+        $this->helper->_inject($this->webdriver);
 
         return parent::setUp();
     }

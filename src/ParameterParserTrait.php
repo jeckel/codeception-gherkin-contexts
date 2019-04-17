@@ -8,13 +8,13 @@ use Behat\Gherkin\Node\TableNode;
  * Class ParameterParser
  * @package Jeckel\Gherkin
  */
-class ParameterParser
+trait ParameterParserTrait
 {
     /**
      * @param TableNode $tableNode
      * @return array
      */
-    public function parseTableNode(TableNode $tableNode): array
+    public static function parseTableNode(TableNode $tableNode): array
     {
         $parameters = [];
         foreach ($tableNode->getRows() as $index => $row) {

@@ -2,28 +2,28 @@
 
 namespace Jeckel\Gherkin;
 
-use Behat\Behat\Context\Context;
 use Behat\Gherkin\Node\TableNode;
 use Codeception\Lib\Interfaces\DependsOnModule;
 use Codeception\Module\WebDriver;
-use Codeception\Module;
-use Codeception\TestInterface;
 
 /**
  * Class WebdriverHelper
  * @package Jeckel\GherkinHelper
  * @SuppressWarnings(PHPMD.TooManyPublicMethods)
  */
-class WebdriverContext extends Module implements DependsOnModule, Context
+class WebdriverContext extends ContextAbstract implements DependsOnModule
 {
+    /**
+     * Allows to explicitly set what methods have this class.
+     *
+     * All methods in this context should be use in Gherkin file, not as Action in CEST files
+     *
+     * @var array
+     */
+    public static $onlyActions = [];
+
     /** @var WebDriver */
     protected $webDriver;
-
-    /** @var ParameterParser */
-    protected $paramParser;
-
-    /** @var TestInterface */
-    protected $test;
 
     // phpcs:disable
     /**
@@ -41,22 +41,9 @@ class WebdriverContext extends Module implements DependsOnModule, Context
     /**
      * @param WebDriver       $webDriver
      */
-    public function _inject(
-        WebDriver $webDriver
-    )
+    public function _inject(WebDriver $webDriver)
     {
         $this->webDriver = $webDriver;
-    }
-    // phpcs:enable
-
-    // phpcs:disable
-    /**
-     * @param TestInterface $test
-     */
-    public function _before(TestInterface $test)
-    {
-        parent::_before($test);
-        $this->debug(get_class($test));
     }
     // phpcs:enable
 
@@ -131,7 +118,7 @@ class WebdriverContext extends Module implements DependsOnModule, Context
      */
     public function iSubmitForm(string $form, TableNode $values = null)
     {
-        $this->webDriver->submitForm($form, is_null($values) ? [] : $this->paramParser->parseTableNode($values));
+        $this->webDriver->submitForm($form, is_null($values) ? [] : self::parseTableNode($values));
     }
 
     /**
