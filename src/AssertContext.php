@@ -19,8 +19,8 @@ class AssertContext extends ContextAbstract
 
     /**
      * @Then I should see :arg1 equals :arg2
-     * @param $arg1
-     * @param $arg2
+     * @param mixed $arg1
+     * @param mixed $arg2
      */
     public function iShouldSeeEquals($arg1, $arg2)
     {
@@ -29,8 +29,8 @@ class AssertContext extends ContextAbstract
 
     /**
      * @Then I should see :arg1 greater than :arg2
-     * @param $arg1
-     * @param $arg2
+     * @param mixed $arg1
+     * @param mixed $arg2
      */
     public function iShouldSeeGreaterThan($arg1, $arg2)
     {
@@ -39,8 +39,8 @@ class AssertContext extends ContextAbstract
 
     /**
      * @Then I should see :arg1 greater than or equals :arg2
-     * @param $arg1
-     * @param $arg2
+     * @param mixed $arg1
+     * @param mixed $arg2
      */
     public function iShouldSeeGreaterThanOrEquals($arg1, $arg2)
     {
@@ -49,7 +49,7 @@ class AssertContext extends ContextAbstract
 
     /**
      * @Then I should see :arg1 is false
-     * @param $arg1
+     * @param mixed $arg1
      */
     public function iShouldSeeIsFalse($arg1)
     {
@@ -58,7 +58,7 @@ class AssertContext extends ContextAbstract
 
     /**
      * @Then I should see :arg1 is true
-     * @param $arg1
+     * @param mixed $arg1
      */
     public function iShouldSeeIsTrue($arg1)
     {
@@ -67,8 +67,8 @@ class AssertContext extends ContextAbstract
 
     /**
      * @Then I should see :arg1 less than :arg2
-     * @param $arg1
-     * @param $arg2
+     * @param mixed $arg1
+     * @param mixed $arg2
      */
     public function iShouldSeeLessThan($arg1, $arg2)
     {
@@ -77,8 +77,8 @@ class AssertContext extends ContextAbstract
 
     /**
      * @Then I should see :arg1 less than or equals :arg2
-     * @param $arg1
-     * @param $arg2
+     * @param mixed $arg1
+     * @param mixed $arg2
      */
     public function iShouldSeeLessThanOrEquals($arg1, $arg2)
     {
@@ -87,8 +87,8 @@ class AssertContext extends ContextAbstract
 
     /**
      * @Then I should see :arg1 not equals :arg2
-     * @param $arg1
-     * @param $arg2
+     * @param mixed $arg1
+     * @param mixed $arg2
      */
     public function iShouldSeeNotEquals($arg1, $arg2)
     {

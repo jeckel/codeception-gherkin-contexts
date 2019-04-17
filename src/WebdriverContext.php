@@ -97,6 +97,7 @@ class WebdriverContext extends ContextAbstract implements DependsOnModule
      * @Then I grab text from :from into fixture :fixtureKey
      * @param string $from
      * @param string $fixtureKey
+     * @SuppressWarnings(PHPMD.StaticAccess)
      */
     public function iGrabTextFromIntoFixture(string $from, string $fixtureKey)
     {

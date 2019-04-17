@@ -73,6 +73,7 @@ class RestContext extends ContextAbstract implements DependsOnModule
      * @param string $path
      * @param string $key
      * @throws Exception
+     * @SuppressWarnings(PHPMD.StaticAccess)
      */
     public function iGrabDataFromResponseByJsonPathIntoFixture(string $path, string $key)
     {
