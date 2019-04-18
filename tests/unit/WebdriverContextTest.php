@@ -4,6 +4,7 @@ namespace Test\Jeckel\Gherkin;
 use Codeception\Lib\ModuleContainer;
 use Codeception\Module\WebDriver;
 use Codeception\Test\Unit;
+use Codeception\Util\Fixtures;
 use Jeckel\Gherkin\WebdriverContext;
 use PHPUnit\Framework\MockObject\MockObject;
 
@@ -35,6 +36,19 @@ class WebdriverContextTest extends Unit
         $this->helper->_inject($this->webdriver);
 
         return parent::setUp();
+    }
+
+    public function testIGrabTextFromIntoFixture()
+    {
+        Fixtures::cleanup();
+        $this->assertFalse(Fixtures::exists('title'));
+        $this->webdriver->expects($this->once())
+            ->method('grabTextFrom')
+            ->with('h1')
+            ->willReturn('foobar');
+        $this->helper->iGrabTextFromIntoFixture('h1', 'title');
+        $this->assertTrue(Fixtures::exists('title'));
+        $this->assertEquals('foobar', Fixtures::get('title'));
     }
 
     /**
