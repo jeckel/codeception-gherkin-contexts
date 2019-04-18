@@ -6,6 +6,7 @@
 [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fjeckel%2Fcodeception-gherkin-contexts.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Fjeckel%2Fcodeception-gherkin-contexts?ref=badge_shield)
 [![Twitter](https://img.shields.io/badge/Twitter-%40jeckel4-blue.svg)](https://twitter.com/jeckel4)
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-Julien%20Mercier--Rojas-blue.svg)](https://www.linkedin.com/in/jeckel/)
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fjeckel%2Fcodeception-gherkin-contexts.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fjeckel%2Fcodeception-gherkin-contexts?ref=badge_shield)
 
 # *⚠ Work in Progress ⚠* 
 
@@ -38,3 +39,7 @@ You can read the [full documentation with list of all proposed steps, configurat
 # Issues
 
 If you encounter some issues or want to request additional helpers / steps, you can add new [issues on github](https://github.com/jeckel/codeception-gherkin-contexts/issues).
+
+
+## License
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fjeckel%2Fcodeception-gherkin-contexts.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fjeckel%2Fcodeception-gherkin-contexts?ref=badge_large)
