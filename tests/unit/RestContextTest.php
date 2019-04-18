@@ -11,6 +11,7 @@ use Behat\Gherkin\Node\TableNode;
 use Codeception\Lib\ModuleContainer;
 use Codeception\Module\REST;
 use Codeception\Test\Unit;
+use Codeception\Util\Fixtures;
 use Jeckel\Gherkin\RestContext;
 use PHPUnit\Framework\MockObject\MockObject;
 
@@ -36,6 +37,19 @@ class RestContextTest extends Unit
         $this->helper->_inject($this->rest);
 
         return parent::setUp();
+    }
+
+    public function testIGrabDataFromResponseByJsonPathIntoFixture()
+    {
+        Fixtures::cleanup();
+        $this->assertFalse(Fixtures::exists('token'));
+        $this->rest->expects($this->once())
+            ->method('grabDataFromResponseByJsonPath')
+            ->with('$.jsonPath')
+            ->willReturn('foobar');
+        $this->helper->iGrabDataFromResponseByJsonPathIntoFixture('$.jsonPath', 'token');
+        $this->assertTrue(Fixtures::exists('token'));
+        $this->assertEquals('foobar', Fixtures::get('token'));
     }
 
     /**
