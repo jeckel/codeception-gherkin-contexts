@@ -9,7 +9,7 @@ use Codeception\Configuration;
  * @package Jeckel\Gherkin
  * @SuppressWarnings(PHPMD.LongVariable)
  */
-class Clock extends ContextAbstract implements RequiresPackage
+class Clock extends ContextAbstract
 {
     /** @var array */
     protected $requiredFields = ['clock_path'];
@@ -17,23 +17,37 @@ class Clock extends ContextAbstract implements RequiresPackage
     // disable all inherited actions
     public static $includeInheritedActions = false;
 
-    // phpcs:disable
+    /** @var string */
+    protected $projectDir = null;
+
     /**
-     * @return array
+     * @return string
+     * @SuppressWarnings(PHPMD.StaticAccess)
      */
-    public function _requires()
+    public function getProjectDir(): string
     {
-        return ['Jeckel\Clock\ClockInterface' => '"jeckel/clock": "^1.0.0"'];
+        if (empty($this->projectDir)) {
+            return Configuration::projectDir();
+        }
+        return $this->projectDir;
     }
-    // phpcs:enable
+
+    /**
+     * @param string $projectDir
+     * @return Clock
+     */
+    public function setProjectDir(string $projectDir): Clock
+    {
+        $this->projectDir = $projectDir;
+        return $this;
+    }
 
     /**
      * @Given I set fake clock to :clock
      * @param string $clock
-     * @SuppressWarnings(PHPMD.StaticAccess)
      */
     public function setFakeClockTo(string $clock)
     {
-        file_put_contents(Configuration::projectDir() . $this->config['clock_path'], $clock);
+        file_put_contents($this->projectDir . $this->config['clock_path'], $clock);
     }
 }
