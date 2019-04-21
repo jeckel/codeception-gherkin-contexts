@@ -21,17 +21,19 @@
         }
     },
     "require": {
-        "php": ">=7.0",
+        "php": ">=7.1",
         "codeception/codeception": "^2.5",
         "behat/behat": "^3.5"
     },
     "require-dev": {
         "phpstan/phpstan": "^0.11.5",
         "squizlabs/php_codesniffer": "^3.4",
-        "phpmd/phpmd": "^2.6"
+        "phpmd/phpmd": "^2.6",
+        "mikey179/vfsStream": "^1.6"
     },
     "suggest": {
         "edno/codeception-gherkin-param": "The Codeception extension for supporting parameter notation in Gherkin scenario.",
-        "flow/jsonpath" : "Json path parser"
+        "flow/jsonpath": "Json path parser",
+        "jeckel/clock": "Clock service with mock capability"
     }
 }
