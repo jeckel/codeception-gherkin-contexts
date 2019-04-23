@@ -172,7 +172,13 @@ class RestContext extends ContextAbstract implements DependsOnModule, FileHelper
      */
     public function iShouldSeeResponseContainsJSONfromFile(string $filepath)
     {
-        $json = json_decode(file_get_contents($this->getFileHelper()->getAbsolutePathTo($filepath, FileHelper::PATH_TO_DATA)), true);
+        $fileContent = file_get_contents(
+            $this->getFileHelper()->getAbsolutePathTo($filepath, FileHelper::PATH_TO_DATA)
+        );
+        if (! $fileContent) {
+            throw new \InvalidArgumentException(sprintf('Enable to open file %s', $filepath));
+        }
+        $json = json_decode($fileContent, true);
 
         if (null === $json && json_last_error() != JSON_ERROR_NONE) {
             throw new \InvalidArgumentException(

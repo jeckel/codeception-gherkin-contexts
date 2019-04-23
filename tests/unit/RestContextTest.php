@@ -35,7 +35,7 @@ class RestContextTest extends Unit
         $moduleContainer = $this->createMock(ModuleContainer::class);
 
         $this->helper = new RestContext($moduleContainer);
-        $this->helper->_inject($this->rest, $this->createMock(Config::class));
+        $this->helper->_inject($this->rest);
 
         return parent::setUp();
     }

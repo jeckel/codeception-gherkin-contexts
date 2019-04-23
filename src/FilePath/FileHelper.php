@@ -3,12 +3,13 @@
 namespace Jeckel\Gherkin\FilePath;
 
 use Codeception\Configuration;
+use Codeception\Module;
 
 /**
  * Class FileHelper
  * @package Jeckel\Gherkin\FilePath
  */
-class FileHelper
+class FileHelper extends Module
 {
     const PATH_TO_PROJECT = 'project';
     const PATH_TO_DATA    = 'data';
@@ -30,7 +31,11 @@ class FileHelper
      */
     public function getAbsolutePathTo(string $filepath, string $pathTo = ''): string
     {
-        return realpath($this->getBasePath($pathTo) . $filepath);
+        $path = realpath($this->getBasePath($pathTo) . $filepath);
+        if (! $path) {
+            throw new \RuntimeException(sprintf('Invalid path %s', $this->getBasePath($pathTo) . $filepath));
+        }
+        return $path;
     }
 
     /**
@@ -108,9 +113,9 @@ class FileHelper
 
     /**
      * @param string $supportDir
-     * @return FilePathAwareTrait
+     * @return self
      */
-    public function setSupportDir(string $supportDir): FilePathAwareTrait
+    public function setSupportDir(string $supportDir): self
     {
         $this->supportDir = $supportDir;
         return $this;

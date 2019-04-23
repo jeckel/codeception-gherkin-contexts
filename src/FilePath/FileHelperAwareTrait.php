@@ -25,7 +25,9 @@ trait FileHelperAwareTrait
             if (!$moduleContainer->hasModule(FileHelper::class)) {
                 $moduleContainer->create(FileHelper::class);
             }
-            $this->fileHelper = $moduleContainer->getModule(FileHelper::class);
+            /** @var FileHelper $module */
+            $module = $moduleContainer->getModule(FileHelper::class);
+            $this->fileHelper = $module;
         }
         return $this->fileHelper;
     }
