@@ -6,12 +6,17 @@
  */
 namespace Test\Jeckel\Gherkin\FilePath;
 
+use Codeception\Test\Unit;
 use Codeception\Lib\ModuleContainer;
 use Jeckel\Gherkin\FilePath\FileHelper;
 use PHPUnit\Framework\MockObject\MockObject;
 use Codeception\Configuration;
 
-class FileHelperTest extends \Codeception\Test\Unit
+/**
+ * Class FileHelperTest
+ * @package Test\Jeckel\Gherkin\FilePath
+ */
+class FileHelperTest extends Unit
 {
     /** @var FileHelper */
     protected $fileHelper;
