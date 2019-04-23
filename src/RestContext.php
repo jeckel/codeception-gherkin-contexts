@@ -3,19 +3,25 @@
 namespace Jeckel\Gherkin;
 
 use Behat\Gherkin\Node\TableNode;
+use Codeception\Configuration;
 use Codeception\Lib\Interfaces\DependsOnModule;
 use Codeception\Lib\ModuleContainer;
 use Codeception\Module\REST;
 use Codeception\Util\Fixtures;
 use Exception;
+use Jeckel\Gherkin\FilePath\FileHelper;
+use Jeckel\Gherkin\FilePath\FileHelperAwareInterface;
+use Jeckel\Gherkin\FilePath\FileHelperAwareTrait;
 
 /**
  * Class RestHelper
  * @package Jeckel\Gherkin
  * @SuppressWarnings(PHPMD.TooManyPublicMethods)
  */
-class RestContext extends ContextAbstract implements DependsOnModule
+class RestContext extends ContextAbstract implements DependsOnModule, FileHelperAwareInterface
 {
+    use FileHelperAwareTrait;
+
     /**
      * Allows to explicitly set what methods have this class.
      *
@@ -27,17 +33,6 @@ class RestContext extends ContextAbstract implements DependsOnModule
 
     /** @var REST */
     protected $rest;
-
-    /** @var Config */
-    protected $fileHandler;
-
-    public function __construct(ModuleContainer $moduleContainer, $config = null)
-    {
-        parent::__construct($moduleContainer, $config);
-        /** @var Config config */
-        $config = $this->moduleContainer->create(Config::class);
-        $this->fileHandler = $config;
-    }
 
     // phpcs:disable
     /**
@@ -170,6 +165,21 @@ class RestContext extends ContextAbstract implements DependsOnModule
             );
         }
         $this->rest->seeResponseContainsJson(json_decode($arg1, true));
+    }
+
+    /**
+     * @Then I should see response contains json from file :filepath
+     */
+    public function iShouldSeeResponseContainsJSONfromFile(string $filepath)
+    {
+        $json = json_decode(file_get_contents($this->getFileHelper()->getAbsolutePathTo($filepath, FileHelper::PATH_TO_DATA)), true);
+
+        if (null === $json && json_last_error() != JSON_ERROR_NONE) {
+            throw new \InvalidArgumentException(
+                sprintf('Argument provided could not be json decode: %s', json_last_error_msg())
+            );
+        }
+        $this->rest->seeResponseContainsJson(json_decode($json, true));
     }
 
     /**

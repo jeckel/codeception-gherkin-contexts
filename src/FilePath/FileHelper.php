@@ -5,11 +5,15 @@ namespace Jeckel\Gherkin\FilePath;
 use Codeception\Configuration;
 
 /**
- * Class FilePathAwareTrait
+ * Class FileHelper
  * @package Jeckel\Gherkin\FilePath
  */
-trait FilePathAwareTrait
+class FileHelper
 {
+    const PATH_TO_PROJECT = 'project';
+    const PATH_TO_DATA    = 'data';
+    const PATH_TO_SUPPORT = 'support';
+
     /** @var string */
     private $projectDir;
 
@@ -36,11 +40,11 @@ trait FilePathAwareTrait
     private function getBasePath(string $pathTo)
     {
         switch ($pathTo) {
-            case FilePathAwareInterface::PATH_TO_PROJECT:
+            case FileHelper::PATH_TO_PROJECT:
                 return $this->getProjectDir() . '/';
-            case FilePathAwareInterface::PATH_TO_DATA:
+            case FileHelper::PATH_TO_DATA:
                 return $this->getDataDir() . '/';
-            case FilePathAwareInterface::PATH_TO_SUPPORT:
+            case FileHelper::PATH_TO_SUPPORT:
                 return $this->getSupportDir() . '/';
         }
         return '';
