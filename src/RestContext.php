@@ -3,18 +3,25 @@
 namespace Jeckel\Gherkin;
 
 use Behat\Gherkin\Node\TableNode;
+use Codeception\Configuration;
 use Codeception\Lib\Interfaces\DependsOnModule;
+use Codeception\Lib\ModuleContainer;
 use Codeception\Module\REST;
 use Codeception\Util\Fixtures;
 use Exception;
+use Jeckel\Gherkin\FilePath\FileHelper;
+use Jeckel\Gherkin\FilePath\FileHelperAwareInterface;
+use Jeckel\Gherkin\FilePath\FileHelperAwareTrait;
 
 /**
  * Class RestHelper
  * @package Jeckel\Gherkin
  * @SuppressWarnings(PHPMD.TooManyPublicMethods)
  */
-class RestContext extends ContextAbstract implements DependsOnModule
+class RestContext extends ContextAbstract implements DependsOnModule, FileHelperAwareInterface
 {
+    use FileHelperAwareTrait;
+
     /**
      * Allows to explicitly set what methods have this class.
      *
@@ -28,7 +35,6 @@ class RestContext extends ContextAbstract implements DependsOnModule
     protected $rest;
 
     // phpcs:disable
-
     /**
      * @return array
      */
@@ -148,12 +154,43 @@ class RestContext extends ContextAbstract implements DependsOnModule
     }
 
     /**
-     * @Then the JSON should be equal to :json
-     * @param string $json
+     * @Then I should see response contains json :arg1
+     * @param string $arg1
      */
-    public function theJSONShouldBeEqualTo(string $json)
+    public function iShouldSeeResponseContainsJson(string $arg1)
     {
-        $this->rest->seeResponseEquals($json);
+        $this->checkResponseContainsJson($arg1);
+    }
+
+    /**
+     * @Then I should see response contains json from file :filepath
+     * @param string $filepath
+     */
+    public function iShouldSeeResponseContainsJSONFromFile(string $filepath)
+    {
+        $fileContent = file_get_contents(
+            $this->getFileHelper()->getAbsolutePathTo($filepath, FileHelper::PATH_TO_DATA)
+        );
+        if (! $fileContent) {
+            throw new \InvalidArgumentException(sprintf('Enable to open file %s', $filepath));
+        }
+        $this->checkResponseContainsJson($fileContent);
+    }
+
+    /**
+     * @param string $jsonString
+     */
+    protected function checkResponseContainsJson(string $jsonString)
+    {
+        var_dump($jsonString);
+        $json = json_decode($jsonString, true);
+
+        if (null === $json && json_last_error() != JSON_ERROR_NONE) {
+            throw new \InvalidArgumentException(
+                sprintf('Argument provided is not valid JSON: %s', json_last_error_msg())
+            );
+        }
+        $this->rest->seeResponseContainsJson($json);
     }
 
     /**
