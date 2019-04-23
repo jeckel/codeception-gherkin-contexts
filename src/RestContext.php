@@ -4,6 +4,7 @@ namespace Jeckel\Gherkin;
 
 use Behat\Gherkin\Node\TableNode;
 use Codeception\Lib\Interfaces\DependsOnModule;
+use Codeception\Lib\ModuleContainer;
 use Codeception\Module\REST;
 use Codeception\Util\Fixtures;
 use Exception;
@@ -27,8 +28,18 @@ class RestContext extends ContextAbstract implements DependsOnModule
     /** @var REST */
     protected $rest;
 
-    // phpcs:disable
+    /** @var Config */
+    protected $config;
 
+    public function __construct(ModuleContainer $moduleContainer, $config = null)
+    {
+        parent::__construct($moduleContainer, $config);
+        /** @var Config config */
+        $config = $this->moduleContainer->create(Config::class);
+        $this->config = $config;
+    }
+
+    // phpcs:disable
     /**
      * @return array
      */

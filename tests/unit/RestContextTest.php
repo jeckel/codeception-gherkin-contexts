@@ -12,6 +12,7 @@ use Codeception\Lib\ModuleContainer;
 use Codeception\Module\REST;
 use Codeception\Test\Unit;
 use Codeception\Util\Fixtures;
+use Jeckel\Gherkin\Config;
 use Jeckel\Gherkin\RestContext;
 use PHPUnit\Framework\MockObject\MockObject;
 
@@ -34,7 +35,7 @@ class RestContextTest extends Unit
         $moduleContainer = $this->createMock(ModuleContainer::class);
 
         $this->helper = new RestContext($moduleContainer);
-        $this->helper->_inject($this->rest);
+        $this->helper->_inject($this->rest, $this->createMock(Config::class));
 
         return parent::setUp();
     }
