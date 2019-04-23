@@ -2,6 +2,8 @@
 
 namespace Jeckel\Gherkin;
 
+use Codeception\Util\Fixtures;
+
 /**
  * Class AssertContext
  * @package Jeckel\Gherkin
@@ -93,5 +95,14 @@ class AssertContext extends ContextAbstract
     public function iShouldSeeNotEquals($arg1, $arg2)
     {
         $this->assertNotEquals($arg1, $arg2);
+    }
+
+    /**
+     * @Given I clear fixtures
+     * @SuppressWarnings(PHPMD.StaticAccess)
+     */
+    public function clearFixtures()
+    {
+        Fixtures::cleanup();
     }
 }
