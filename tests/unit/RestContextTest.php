@@ -121,7 +121,7 @@ class RestContextTest extends Unit
     /**
      * @test iShouldSeeResponseContainsJson
      * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage Argument provided could not be json decode:
+     * @expectedExceptionMessage Argument provided is not valid JSON:
      */
     public function testIShouldSeeResponseContainsJsonWithInvalidJson()
     {

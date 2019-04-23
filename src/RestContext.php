@@ -155,22 +155,18 @@ class RestContext extends ContextAbstract implements DependsOnModule, FileHelper
 
     /**
      * @Then I should see response contains json :arg1
+     * @param string $arg1
      */
-    public function iShouldSeeResponseContainsJson($arg1)
+    public function iShouldSeeResponseContainsJson(string $arg1)
     {
-        $json = json_decode($arg1);
-        if (null === $json && json_last_error() != JSON_ERROR_NONE) {
-            throw new \InvalidArgumentException(
-                sprintf('Argument provided could not be json decode: %s', json_last_error_msg())
-            );
-        }
-        $this->rest->seeResponseContainsJson(json_decode($arg1, true));
+        $this->checkResponseContainsJson($arg1);
     }
 
     /**
      * @Then I should see response contains json from file :filepath
+     * @param string $filepath
      */
-    public function iShouldSeeResponseContainsJSONfromFile(string $filepath)
+    public function iShouldSeeResponseContainsJSONFromFile(string $filepath)
     {
         $fileContent = file_get_contents(
             $this->getFileHelper()->getAbsolutePathTo($filepath, FileHelper::PATH_TO_DATA)
@@ -178,14 +174,23 @@ class RestContext extends ContextAbstract implements DependsOnModule, FileHelper
         if (! $fileContent) {
             throw new \InvalidArgumentException(sprintf('Enable to open file %s', $filepath));
         }
-        $json = json_decode($fileContent, true);
+        $this->checkResponseContainsJson($fileContent);
+    }
+
+    /**
+     * @param string $jsonString
+     */
+    protected function checkResponseContainsJson(string $jsonString)
+    {
+        var_dump($jsonString);
+        $json = json_decode($jsonString, true);
 
         if (null === $json && json_last_error() != JSON_ERROR_NONE) {
             throw new \InvalidArgumentException(
-                sprintf('Argument provided could not be json decode: %s', json_last_error_msg())
+                sprintf('Argument provided is not valid JSON: %s', json_last_error_msg())
             );
         }
-        $this->rest->seeResponseContainsJson(json_decode($json, true));
+        $this->rest->seeResponseContainsJson($json);
     }
 
     /**
