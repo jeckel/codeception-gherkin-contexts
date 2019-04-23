@@ -31,11 +31,7 @@ class FileHelper extends Module
      */
     public function getAbsolutePathTo(string $filepath, string $pathTo = ''): string
     {
-        $path = realpath($this->getBasePath($pathTo) . $filepath);
-        if (! $path) {
-            throw new \RuntimeException(sprintf('Invalid path %s', $this->getBasePath($pathTo) . $filepath));
-        }
-        return $path;
+        return $this->getBasePath($pathTo) . $filepath;
     }
 
     /**
@@ -46,11 +42,11 @@ class FileHelper extends Module
     {
         switch ($pathTo) {
             case FileHelper::PATH_TO_PROJECT:
-                return $this->getProjectDir() . '/';
+                return $this->getProjectDir();
             case FileHelper::PATH_TO_DATA:
-                return $this->getDataDir() . '/';
+                return $this->getDataDir();
             case FileHelper::PATH_TO_SUPPORT:
-                return $this->getSupportDir() . '/';
+                return $this->getSupportDir();
         }
         return '';
     }
