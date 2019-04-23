@@ -103,4 +103,29 @@ class RestContextTest extends Unit
 
         $this->helper->iSendAPUTRequestToWithParameters('http://foo.bar', $tableNode);
     }
+
+    /**
+     * @test iShouldSeeResponseContainsJson
+     */
+    public function testIShouldSeeResponseContainsJson()
+    {
+        $jsonInput = '{"foo": ["bar", "baz"]}';
+
+        $this->rest->expects($this->once())
+            ->method('seeResponseContainsJson')
+            ->with(['foo' => ['bar', 'baz']]);
+        $this->helper->iShouldSeeResponseContainsJson($jsonInput);
+    }
+
+    /**
+     * @test iShouldSeeResponseContainsJson
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage Argument provided could not be json decode:
+     */
+    public function testIShouldSeeResponseContainsJsonWithInvalidJson()
+    {
+        $this->rest->expects($this->never())
+            ->method('seeResponseContainsJson');
+        $this->helper->iShouldSeeResponseContainsJson('foo[]{');
+    }
 }

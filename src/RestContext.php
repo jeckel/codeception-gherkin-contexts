@@ -148,12 +148,17 @@ class RestContext extends ContextAbstract implements DependsOnModule
     }
 
     /**
-     * @Then the JSON should be equal to :json
-     * @param string $json
+     * @Then I should see response contains json :arg1
      */
-    public function theJSONShouldBeEqualTo(string $json)
+    public function iShouldSeeResponseContainsJson($arg1)
     {
-        $this->rest->seeResponseEquals($json);
+        $json = json_decode($arg1);
+        if (null === $json && json_last_error() != JSON_ERROR_NONE) {
+            throw new \InvalidArgumentException(
+                sprintf('Argument provided could not be json decode: %s', json_last_error_msg())
+            );
+        }
+        $this->rest->seeResponseContainsJson(json_decode($arg1, true));
     }
 
     /**
