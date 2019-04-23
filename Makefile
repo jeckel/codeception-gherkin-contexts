@@ -16,3 +16,5 @@ phpmd:
 
 codecept:
 	@${PHP} ./vendor/bin/codecept run --coverage
+
+test: codecept
