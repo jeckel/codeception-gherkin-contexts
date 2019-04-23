@@ -29,14 +29,14 @@ class RestContext extends ContextAbstract implements DependsOnModule
     protected $rest;
 
     /** @var Config */
-    protected $config;
+    protected $fileHandler;
 
     public function __construct(ModuleContainer $moduleContainer, $config = null)
     {
         parent::__construct($moduleContainer, $config);
         /** @var Config config */
         $config = $this->moduleContainer->create(Config::class);
-        $this->config = $config;
+        $this->fileHandler = $config;
     }
 
     // phpcs:disable
