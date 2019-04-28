@@ -27,7 +27,7 @@ class WebdriverContextTest extends Unit
     /**
      * Setup
      */
-    public function setUp()
+    public function setUp(): void
     {
         $this->webdriver = $this->createMock(WebDriver::class);
         /** @var MockObject | ModuleContainer $moduleContainer */
@@ -35,10 +35,10 @@ class WebdriverContextTest extends Unit
         $this->helper = new WebdriverContext($moduleContainer);
         $this->helper->_inject($this->webdriver);
 
-        return parent::setUp();
+        parent::setUp();
     }
 
-    public function testIGrabTextFromIntoFixture()
+    public function testIGrabTextFromIntoFixture(): void
     {
         Fixtures::cleanup();
         $this->assertFalse(Fixtures::exists('title'));
@@ -54,7 +54,7 @@ class WebdriverContextTest extends Unit
     /**
      * @test WebdriverHelper::iShouldSee
      */
-    public function testIShouldSee()
+    public function testIShouldSee(): void
     {
         $foobar = 'foobar';
         $this->webdriver->expects($this->once())
@@ -66,7 +66,7 @@ class WebdriverContextTest extends Unit
     /**
      * @test WebdriverHelper::iClick
      */
-    public function testIClick()
+    public function testIClick(): void
     {
         $foobar = 'foobar';
         $this->webdriver->expects($this->once())
@@ -78,7 +78,7 @@ class WebdriverContextTest extends Unit
     /**
      * @test WebdriverHelper::iAmOnPage
      */
-    public function testIAmOnPage()
+    public function testIAmOnPage(): void
     {
         $foobar = 'foobar';
         $this->webdriver->expects($this->once())
@@ -90,7 +90,7 @@ class WebdriverContextTest extends Unit
     /**
      * @test WebdriverHelper::iFillField
      */
-    public function testIFillField()
+    public function testIFillField(): void
     {
         $field = 'foobar';
         $value = 'bar baz';
