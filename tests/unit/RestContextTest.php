@@ -47,7 +47,7 @@ class RestContextTest extends Unit
         $this->helper->_inject($this->rest);
         $this->helper->setFileHelper($this->fileHelper);
 
-        return parent::setUp();
+        parent::setUp();
     }
 
     public function testIGrabDataFromResponseByJsonPathIntoFixture(): void

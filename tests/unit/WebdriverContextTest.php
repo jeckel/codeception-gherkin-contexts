@@ -35,7 +35,7 @@ class WebdriverContextTest extends Unit
         $this->helper = new WebdriverContext($moduleContainer);
         $this->helper->_inject($this->webdriver);
 
-        return parent::setUp();
+        parent::setUp();
     }
 
     public function testIGrabTextFromIntoFixture(): void
