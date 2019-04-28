@@ -23,7 +23,7 @@
     "require": {
         "php": ">=7.1",
         "ext-json": "*",
-        "codeception/codeception": "^2.5",
+        "codeception/codeception": ">=2.5",
         "behat/behat": "^3.5"
     },
     "require-dev": {
