@@ -4,7 +4,6 @@
  * Date: 16/04/19
  * Time: 10:12
  */
-
 namespace Test\Jeckel\Gherkin;
 
 use Behat\Gherkin\Node\TableNode;
@@ -12,15 +11,18 @@ use Codeception\Lib\ModuleContainer;
 use Codeception\Module\REST;
 use Codeception\Test\Unit;
 use Codeception\Util\Fixtures;
-use Jeckel\Clock\ClockFactory;
-use Jeckel\Gherkin\Config;
 use Jeckel\Gherkin\FilePath\FileHelper;
 use Jeckel\Gherkin\RestContext;
 use org\bovigo\vfs\vfsStream;
-use org\bovigo\vfs\vfsStreamDirectory;
-use org\bovigo\vfs\vfsStreamWrapper;
 use PHPUnit\Framework\MockObject\MockObject;
+use InvalidArgumentException;
+use ReflectionException;
+use Exception;
 
+/**
+ * Class RestContextTest
+ * @package Test\Jeckel\Gherkin
+ */
 class RestContextTest extends Unit
 {
     /** @var REST | MockObject */
@@ -29,11 +31,12 @@ class RestContextTest extends Unit
     /** @var RestContext */
     protected $helper;
 
-    /** @var FileHelper */
+    /** @var FileHelper | MockObject */
     protected $fileHelper;
 
     /**
      * Setup
+     * @throws ReflectionException
      */
     public function setUp(): void
     {
@@ -50,6 +53,9 @@ class RestContextTest extends Unit
         parent::setUp();
     }
 
+    /**
+     * @throws Exception
+     */
     public function testIGrabDataFromResponseByJsonPathIntoFixture(): void
     {
         Fixtures::cleanup();
@@ -65,6 +71,7 @@ class RestContextTest extends Unit
 
     /**
      * @test iSendAPOSTRequestToWithParameters
+     * @throws ReflectionException
      */
     public function testISendAPOSTRequestToWithParameters(): void
     {
@@ -91,6 +98,7 @@ class RestContextTest extends Unit
 
     /**
      * @test iSendAPUTRequestToWithParameters
+     * @throws ReflectionException
      */
     public function testISendAPUTRequestToWithParameters(): void
     {
@@ -130,11 +138,12 @@ class RestContextTest extends Unit
 
     /**
      * @test iShouldSeeResponseContainsJson
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage Argument provided is not valid JSON:
      */
     public function testIShouldSeeResponseContainsJsonWithInvalidJson(): void
     {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Argument provided is not valid JSON:');
+
         $this->rest->expects($this->never())
             ->method('seeResponseContainsJson');
         $this->helper->iShouldSeeResponseContainsJson('foo[]{');
