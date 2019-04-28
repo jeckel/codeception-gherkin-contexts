@@ -19,7 +19,7 @@ class AssertTest extends \Codeception\Test\Unit
     /**
      * Setup
      */
-    public function setUp()
+    public function setUp(): void
     {
         /** @var MockObject | ModuleContainer $moduleContainer */
         $moduleContainer = $this->createMock(ModuleContainer::class);
@@ -31,7 +31,7 @@ class AssertTest extends \Codeception\Test\Unit
     /**
      * @test clearFixtures
      */
-    public function testClearFixtures()
+    public function testClearFixtures(): void
     {
         $data = new \stdClass();
         Fixtures::add('foo', $data);

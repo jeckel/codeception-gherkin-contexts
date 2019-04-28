@@ -35,7 +35,7 @@ class RestContextTest extends Unit
     /**
      * Setup
      */
-    public function setUp()
+    public function setUp(): void
     {
         $this->rest = $this->createMock(REST::class);
         $this->fileHelper = $this->createMock(FileHelper::class);
@@ -50,7 +50,7 @@ class RestContextTest extends Unit
         return parent::setUp();
     }
 
-    public function testIGrabDataFromResponseByJsonPathIntoFixture()
+    public function testIGrabDataFromResponseByJsonPathIntoFixture(): void
     {
         Fixtures::cleanup();
         $this->assertFalse(Fixtures::exists('token'));
@@ -66,7 +66,7 @@ class RestContextTest extends Unit
     /**
      * @test iSendAPOSTRequestToWithParameters
      */
-    public function testISendAPOSTRequestToWithParameters()
+    public function testISendAPOSTRequestToWithParameters(): void
     {
         $rows = [
             ['field', 'value'],
@@ -92,7 +92,7 @@ class RestContextTest extends Unit
     /**
      * @test iSendAPUTRequestToWithParameters
      */
-    public function testISendAPUTRequestToWithParameters()
+    public function testISendAPUTRequestToWithParameters(): void
     {
         $rows = [
             ['field', 'value'],
@@ -118,7 +118,7 @@ class RestContextTest extends Unit
     /**
      * @test iShouldSeeResponseContainsJson
      */
-    public function testIShouldSeeResponseContainsJson()
+    public function testIShouldSeeResponseContainsJson(): void
     {
         $jsonInput = '{"foo": ["bar", "baz"]}';
 
@@ -133,7 +133,7 @@ class RestContextTest extends Unit
      * @expectedException \InvalidArgumentException
      * @expectedExceptionMessage Argument provided is not valid JSON:
      */
-    public function testIShouldSeeResponseContainsJsonWithInvalidJson()
+    public function testIShouldSeeResponseContainsJsonWithInvalidJson(): void
     {
         $this->rest->expects($this->never())
             ->method('seeResponseContainsJson');
@@ -143,7 +143,7 @@ class RestContextTest extends Unit
     /**
      * @test iShouldSeeResponseContainsJSONFromFile
      */
-    public function testIShouldSeeResponseContainsJsonFromFile()
+    public function testIShouldSeeResponseContainsJsonFromFile(): void
     {
         $jsonString = '{"foo": ["bar", "baz"]}';
 
