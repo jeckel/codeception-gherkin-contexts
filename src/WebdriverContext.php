@@ -124,6 +124,16 @@ class WebdriverContext extends ContextAbstract implements DependsOnModule
     }
 
     /**
+     * @Then I select option :option of :select
+     * @param string $option
+     * @param string $select
+     */
+    public function iSelectOptionOf(string $option, string $select)
+    {
+        $this->webDriver->selectOption($select, $option);
+    }
+
+    /**
      * @Then I should not see :text
      * @param string $text
      */
@@ -249,6 +259,16 @@ class WebdriverContext extends ContextAbstract implements DependsOnModule
     public function iShouldSeeLinkWithUrl(string $link, string $url)
     {
         $this->webDriver->seeLink($link, $url);
+    }
+
+    /**
+     * @Then I should see option :option is selected in :select
+     * @param string $option
+     * @param string $select
+     */
+    public function iShouldSeeOptionIsSelectedIn(string $option, string $select)
+    {
+        $this->webDriver->seeOptionIsSelected($select, $option);
     }
 
     /**
