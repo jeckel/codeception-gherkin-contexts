@@ -11,6 +11,7 @@ use Codeception\Util\Fixtures;
  * Class WebdriverHelper
  * @package Jeckel\GherkinHelper
  * @SuppressWarnings(PHPMD.TooManyPublicMethods)
+ * @SuppressWarnings(PHPMD.TooManyMethods)
  */
 class WebdriverContext extends ContextAbstract implements DependsOnModule
 {
@@ -231,6 +232,16 @@ class WebdriverContext extends ContextAbstract implements DependsOnModule
     public function iShouldSeeInCurrentUrl(string $uri)
     {
         $this->webDriver->seeInCurrentUrl($uri);
+    }
+
+    /**
+     * @Then I should see :value in field :field
+     * @param string $value
+     * @param string $field
+     */
+    public function iShouldSeeInField(string $value, string $field)
+    {
+        $this->webDriver->seeInField($field, $value);
     }
 
     /**
