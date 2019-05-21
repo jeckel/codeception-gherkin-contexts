@@ -182,7 +182,6 @@ class RestContext extends ContextAbstract implements DependsOnModule, FileHelper
      */
     protected function checkResponseContainsJson(string $jsonString)
     {
-        var_dump($jsonString);
         $json = json_decode($jsonString, true);
 
         if (null === $json && json_last_error() != JSON_ERROR_NONE) {
