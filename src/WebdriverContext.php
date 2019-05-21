@@ -11,6 +11,7 @@ use Codeception\Util\Fixtures;
  * Class WebdriverHelper
  * @package Jeckel\GherkinHelper
  * @SuppressWarnings(PHPMD.TooManyPublicMethods)
+ * @SuppressWarnings(PHPMD.TooManyMethods)
  */
 class WebdriverContext extends ContextAbstract implements DependsOnModule
 {
@@ -124,6 +125,16 @@ class WebdriverContext extends ContextAbstract implements DependsOnModule
     }
 
     /**
+     * @Then I select option :option of :select
+     * @param string $option
+     * @param string $select
+     */
+    public function iSelectOptionOf(string $option, string $select)
+    {
+        $this->webDriver->selectOption($select, $option);
+    }
+
+    /**
      * @Then I should not see :text
      * @param string $text
      */
@@ -224,6 +235,16 @@ class WebdriverContext extends ContextAbstract implements DependsOnModule
     }
 
     /**
+     * @Then I should see :value in field :field
+     * @param string $value
+     * @param string $field
+     */
+    public function iShouldSeeInField(string $value, string $field)
+    {
+        $this->webDriver->seeInField($field, $value);
+    }
+
+    /**
      * @Then I should see in source
      * @param string $raw
      */
@@ -249,6 +270,16 @@ class WebdriverContext extends ContextAbstract implements DependsOnModule
     public function iShouldSeeLinkWithUrl(string $link, string $url)
     {
         $this->webDriver->seeLink($link, $url);
+    }
+
+    /**
+     * @Then I should see option :option is selected in :select
+     * @param string $option
+     * @param string $select
+     */
+    public function iShouldSeeOptionIsSelectedIn(string $option, string $select)
+    {
+        $this->webDriver->seeOptionIsSelected($select, $option);
     }
 
     /**
